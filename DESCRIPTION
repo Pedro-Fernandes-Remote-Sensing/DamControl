@@ -1,12 +1,11 @@
 Package: WaterDetection
-Title: What the Package Does (One Line, Title Case)
+Title: Water Detection for Dam level control (or lakes, bodies of water etc) using pre-processed Sentinel-2 imagery
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+    person("Pedro", "Fernandes", , "pedro.pires.fernandes@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Description: Takes composite Sentinel-2 imagery (with 10 bands) and runs an algorythm that detects water based on a combination of RGB and NDVI values. Exports pixel data as .CSV and builds time series graphs
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
