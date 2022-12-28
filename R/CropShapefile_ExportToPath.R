@@ -1,4 +1,14 @@
-CropShapefile = function(ShapefilePath, ShapefileName, ExportPath){
+#' Crops a shapefile into all its individual pieces, by OBJECTID, and exports all the individual shapefiles into ExportPath, and prints time spent; Also produces a global variable called ID_List representing a list of IDs taken from the original shapefile;
+#'
+#' @param ShapefilePath a string representing a path to the shapefile to be cut;
+#' @param ShapefileName the name of the shapefile file;
+#' @param ExportPath a string representing the path to which the individual shapefiles are to be exported;
+#'
+#' @return a list of individual shapefiles, ordered by OBJECTID;
+#' @export
+#'
+#' @examples Data too large, check Vignette.
+CropShapefile_ExportToPath = function(ShapefilePath, ShapefileName, ExportPath){
   StartTime = Sys.time()
   Shapefile = readOGR(ShapefilePath, ShapefileName)
   Iterator = 1

@@ -1,3 +1,9 @@
+#' Checks if required packages are installed and loaded and if they're not, installs them and loads them. This is usually not needed as R should install any dependencies; Prints time spent;
+#'
+#' @return has no return. Meant to called without arguments;
+#' @export
+#'
+#' @examples CheckPackages()
 CheckPackages = function(){
   StartTime = Sys.time()
   if (!require('raster')) install.packages('raster'); library ('raster')

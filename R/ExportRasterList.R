@@ -1,3 +1,15 @@
+#' Exports a list of rasters and appends the month name to the end, assuming the rasters are ordered by agricultural year; Also prints time spent;
+#'
+#' @param RasterList the raster list to be exported as GTiff;
+#' @param Path a string representing the path to export to;
+#' @param GeneralFileName a file name for the files, usually xxxx_ as the function will append the month name at the end;
+#' @param StringFinished_One a string to be printed as each raster is exported;
+#' @param StringFinished_All a string to be printed in the end;
+#'
+#' @return doesnt return anything. Meant to be used as an export tool;
+#' @export
+#'
+#' @examples Data too large, check Vignette.
 ExportRasterList = function(RasterList, Path, GeneralFileName, StringFinished_One, StringFinished_All){
   StartTime = Sys.time()
   MonthNames = list("(1)Outubro","(2)Novembro", "(3)Dezembro", "(4)Janeiro", "(5)Fevereiro", "(6)Marco", "(7)Abril", "(8)Maio", "(9)Junho", "(10)Julho", "(11)Agosto", "(12)Setembro")

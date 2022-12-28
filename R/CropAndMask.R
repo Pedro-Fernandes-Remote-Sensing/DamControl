@@ -1,3 +1,13 @@
+#' Cuts and Masks a list of rasters to the zone of a shapefile; Cutting the satellite images to the required zones in the beginning saves a LOT of time; Prints time spent;
+#'
+#' @param BrickList a list of Bricks, raster objects, to be reduced, as in cut, to the area of a shapefile;
+#' @param ShapefilePath a string representing a path to a shapefile;
+#' @param ShapeName a string representing the shapefiles name;
+#'
+#' @return a list of rasters cut to the zone of the shapefile presented in the arguments;
+#' @export
+#'
+#' @examples Data too large, check Vignette.
 CropAndMask = function(BrickList, ShapefilePath, ShapeName){
   StartTime = Sys.time()
   CroppedMaskedList = list()

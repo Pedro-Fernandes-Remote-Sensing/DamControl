@@ -1,3 +1,12 @@
+#' Title
+#'
+#' @param FolderDestinationPath
+#' @param ID_list
+#'
+#' @return
+#' @export
+#'
+#' @examples
 CreateIndividualFolders = function(FolderDestinationPath, ID_list){
   StartTime = Sys.time()
   for (ID in ID_list){
@@ -12,6 +21,16 @@ CreateIndividualFolders = function(FolderDestinationPath, ID_list){
   print(paste0(noquote("Total Time spent creating Albufeira_X Folders (HH:MM:SS): "), noquote(TotalTime)))
 }
 
+#' Title
+#'
+#' @param FolderDestinationPath
+#' @param ID_list
+#' @param Threshold_List
+#'
+#' @return
+#' @export
+#'
+#' @examples
 CreateIndividualFolders2 = function(FolderDestinationPath, ID_list, Threshold_List){
   StartTime = Sys.time()
   for (Threshold in Threshold_List){
@@ -28,6 +47,17 @@ CreateIndividualFolders2 = function(FolderDestinationPath, ID_list, Threshold_Li
   print(paste0(noquote("Total Time spent creating Albufeira_X_Threshold_X Folders (HH:MM:SS): "), noquote(TotalTime)))
 }
 
+#' Title
+#'
+#' @param FolderDestinationPath
+#' @param ID_list
+#' @param Threshold_List
+#' @param Threshold_List_2
+#'
+#' @return
+#' @export
+#'
+#' @examples
 CreateIndividualFolders3 = function(FolderDestinationPath, ID_list, Threshold_List, Threshold_List_2){
   StartTime = Sys.time()
   for (Threshold2 in Threshold_List_2){

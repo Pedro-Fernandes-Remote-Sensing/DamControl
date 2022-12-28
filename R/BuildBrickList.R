@@ -1,3 +1,11 @@
+#' Build a "Brick" object list from a List of FilePaths, and prints time spent;
+#'
+#' @param FilePathList a list of file paths. This is usually obtained through list.files with path = location_of_files, pattern = string_to_detect_files, full.names = TRUE
+#'
+#' @return a list of "Bricks", an object usable by R that represents a file with several layers, usually a raster;
+#' @export
+#'
+#' @examples Data is too large, check Vignette.
 BuildBrickList = function(FilePathList){
   StartTime = Sys.time()
   CompositesBrickList = list()

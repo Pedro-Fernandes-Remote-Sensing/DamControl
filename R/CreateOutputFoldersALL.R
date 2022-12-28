@@ -1,3 +1,12 @@
+#' Creates some of the folders required to organize outputs in the a certain provided path and prints time spent;
+#'
+#' @param Year_List a list of integers representing the years to be calculated. Folders will be created based; If Windows based, MAXIMUM CHARACTER SIZE IS 118. Or go to the registry and change the maximum number of characters on a file path;
+#' @param OUTPUT_Path a string representing a path where you'd like the folders to be created;
+#'
+#' @return has no returns. Meant to be used just to create folders;
+#' @export
+#'
+#' @examples CreateOutputFoldersALL()
 CreateOutputFoldersALL = function(Year_List, OUTPUT_Path){
   for (Year in Year_List){
     StartTime = Sys.time()

@@ -1,3 +1,11 @@
+#' Calculates the sum of the first 3 bands of a raster, for each raster in a list and prints time spent;
+#'
+#' @param BrickList requires a list of Bricks, R objects that usually store rasters with multiple bands. Should work with a Stack list as well, but untested;
+#'
+#' @return a list of rasters, with each raster representing the sum of the first 3 bands contained in the corresponding element of the list provided in the argument;
+#' @export
+#'
+#' @examples Data is too large, check Vignette.
 CalculateRGBSum = function(BrickList){
   StartTime = Sys.time()
   RGB_Sum_List = list()
