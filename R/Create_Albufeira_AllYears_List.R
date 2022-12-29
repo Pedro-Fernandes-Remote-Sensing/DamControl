@@ -1,3 +1,12 @@
+#' Organizes the argument into a list of lists. The first element is a list of dataframes that represent all the years of a particular ZOI;
+#'
+#' @param Albufeira_Dataframe_List a list of all the years of imagery, organized by dataframes of ZOI, of the product, usually of Binary_NDVI or Combo; The first element of that list should be a list of all imagery for Year1,
+#' organized by ZOI. So, list first element = ZOI_Dataframe_List_Year1, list second element = ZOI_Dataframe_List_Year2
+#'
+#' @return returns a list of Dataframe lists, where the first element is a list representing all the dataframes for all the years of the first ZOI;
+#' @export
+#'
+#' @examples Data too large, check Vignette.
 Create_Albufeiras_AllYears_List = function(Albufeira_Dataframe_List){
   StartTime = Sys.time()
   Iterator = 1
@@ -11,7 +20,7 @@ Create_Albufeiras_AllYears_List = function(Albufeira_Dataframe_List){
       Iterator2 = Iterator2 + 1
     }
     List2[[Iterator]] = List1
-    Iterator = Iterator + 1 
+    Iterator = Iterator + 1
   }
   EndTime = Sys.time()
   TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))

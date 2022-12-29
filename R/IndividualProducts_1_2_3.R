@@ -1,3 +1,18 @@
+#' Takes a list of products, for example NDVI_2016, and cuts it to each individual ZOI, exporting the results to a certain path;
+#'
+#' @param ProductList_AllThreshold a list of rasters representing each month of a particular product, example a list of each month of NDVI_2016;
+#' @param AlbufeiraShapefileList a list of shapefiles representing the individual ZOI of the original shapefile;
+#' @param ExportPath a string representing an export path;
+#' @param ID_list a list of IDs representing the amount of unique shapes inside the original shapefile, usually created asa global variable using CropShapefile_ExportToPath;
+#' @param StringName a string to name the files, usually XXX_ as the function will attach the name of the month in the end;
+#' @param StringOne a string to print as each product is finished;
+#' @param StringOneAlbufeira a string to print as each complete ZOI is finished;
+#' @param StringAll a string to print in the end;
+#'
+#' @return a list of lists, with the first list representing ZOI_1 and element 1 of the first list being the first month corresponding to the first ZOI;
+#' @export
+#'
+#' @examples Data too large, check Vignette.
 IndividualAlbufeiraProduct = function(ProductList_AllThreshold, AlbufeiraShapefileList, ExportPath, ID_list, StringName, StringOne, StringOneAlbufeira, StringAll){
   StartTime = Sys.time()
   Iterator = 1
@@ -32,8 +47,25 @@ IndividualAlbufeiraProduct = function(ProductList_AllThreshold, AlbufeiraShapefi
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent
   TotalTime = paste0(sapply(c(HoursSpent, MinutesSpent, SecondsSpent), function(x) {formatC(x, width = 2, format = "d", flag = "0")}), collapse = ":")
   print(paste0(noquote("Total Time spent producing Individual Products 1 (HH:MM:SS): "), noquote(TotalTime)))
+  return(AlbufeiraProduct_List)
 }
 
+#' Takes a list of products, for example Binary_NDVI_2016, and cuts it to each individual ZOI, exporting the results to a certain path;
+#'
+#' @param ProductList_AllThreshold a list of rasters representing each month of a particular product, example a list of each month of Binary_NDVI_2016;
+#' @param AlbufeiraShapefileList a list of shapefiles representing the individual ZOI of the original shapefile;
+#' @param ExportPath a string representing an export path;
+#' @param ID_list a list of IDs representing the amount of unique shapes inside the original shapefile, usually created as a global variable using CropShapefile_ExportToPath;
+#' @param Threshold_List a list with a threshold number to be included in the files names, example: 0 as the NDVI threshold to be included the the file name, usually defined earlier in the order of operations, check Vignette;
+#' @param StringName a string to name the files, usually XXX_ as the function will attach the name of the month in the end;
+#' @param StringOne a string to print as each product is finished;
+#' @param StringOneAlbufeira a string to print as each complete ZOI is finished;
+#' @param StringAll a string to print in the end;
+#'
+#' @return a list of lists, with the first list representing ZOI_1 and element 1 of the first list being the first month corresponding to the first ZOI;
+#' @export
+#'
+#' @examples Data too large, check Vignette.
 IndividualAlbufeiraProduct2 = function(ProductList_AllThreshold, AlbufeiraShapefileList, ExportPath, ID_list, Threshold_List, StringName, StringOne, StringOneAlbufeira, StringAll){
   StartTime = Sys.time()
   Iterator = 1
@@ -76,6 +108,23 @@ IndividualAlbufeiraProduct2 = function(ProductList_AllThreshold, AlbufeiraShapef
   return(AlbufeiraProduct_List)
 }
 
+#' Takes a list of products, for example Binary_Combo_2016, and cuts it to each individual ZOI, exporting the results to a certain path;
+#'
+#' @param ProductList_AllThreshold a list of rasters representing each month of a particular product, example a list of each month of Binary_Combo_2016;
+#' @param AlbufeiraShapefileList a list of shapefiles representing the individual ZOI of the original shapefile;
+#' @param ExportPath a string representing an export path;
+#' @param ID_list a list of IDs representing the amount of unique shapes inside the original shapefile, usually created as a global variable using CropShapefile_ExportToPath;
+#' @param Threshold_List a list with a threshold number to be included in the files names, example: 0 as the NDVI threshold to be included the the file name, usually defined earlier in the order of operations, check Vignette;
+#' @param Threshold_List_2 a second list with a threshold number to be included in the files name, example: 800 as the RGBSum threshold, usually defined earlier;
+#' @param StringName a string to name the files, usually XXX_ as the function will attach the name of the month in the end;
+#' @param StringOne a string to print as each product is finished;
+#' @param StringOneAlbufeira a string to print as each complete ZOI is finished;
+#' @param StringAll a string to print in the end;
+#'
+#' @return a list of lists, with the first list representing ZOI_1 and element 1 of the first list being the first month corresponding to the first ZOI;
+#' @export
+#'
+#' @examples Data too large, check Vignette.
 IndividualAlbufeiraProduct3 = function(ProductList_AllThreshold, AlbufeiraShapefileList, ExportPath, ID_list, Threshold_List, Threshold_List_2, StringName, StringOne, StringOneAlbufeira, StringAllOne, StringAllAll){
   StartTime = Sys.time()
   Iterator = 1

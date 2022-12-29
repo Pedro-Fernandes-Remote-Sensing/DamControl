@@ -2,7 +2,8 @@
 % Please edit documentation in R/CropAndMask.R
 \name{CropAndMask}
 \alias{CropAndMask}
-\title{Cuts and Masks a list of rasters to the zone of a shapefile; Cutting the satellite images to the required zones in the beginning saves a LOT of time; Prints time spent;}
+\title{Cuts and Masks a list of rasters to the zone of a shapefile; Cutting the satellite images to the required zones in the beginning saves a LOT of time; Prints time spent;
+Might produced an error: "Error in x$.self$finalize() : attempt to apply non-function" but that's an R problem and it doesnt affect the results;}
 \usage{
 CropAndMask(BrickList, ShapefilePath, ShapeName)
 }
@@ -18,6 +19,7 @@ a list of rasters cut to the zone of the shapefile presented in the arguments;
 }
 \description{
 Cuts and Masks a list of rasters to the zone of a shapefile; Cutting the satellite images to the required zones in the beginning saves a LOT of time; Prints time spent;
+Might produced an error: "Error in x$.self$finalize() : attempt to apply non-function" but that's an R problem and it doesnt affect the results;
 }
 \examples{
 Data too large, check Vignette.

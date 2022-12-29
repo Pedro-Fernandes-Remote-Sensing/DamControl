@@ -1,4 +1,5 @@
 #' Cuts and Masks a list of rasters to the zone of a shapefile; Cutting the satellite images to the required zones in the beginning saves a LOT of time; Prints time spent;
+#' Might produced an error: "Error in x$.self$finalize() : attempt to apply non-function" but that's an R problem and it doesnt affect the results;
 #'
 #' @param BrickList a list of Bricks, raster objects, to be reduced, as in cut, to the area of a shapefile;
 #' @param ShapefilePath a string representing a path to a shapefile;

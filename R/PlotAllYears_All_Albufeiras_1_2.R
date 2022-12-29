@@ -1,3 +1,12 @@
+#' Plots and exports Water Percentage of the input Dataframes. Produces several plots of a time series of Water Percentage of all the ZOI included in the arguments;
+#'
+#' @param Dataframe_List_All a list of lists, with the first element being a list of dataframes. Each dataframe represents a Year of of Product for ZOI 1;
+#' @param Path a string representing an export path to export the graphs;
+#'
+#' @return Doesnt return anything, used to plot graphs and export them.
+#' @export
+#'
+#' @examples Data too large, check Vignette;
 PlotAllYears_All_Albufeiras = function(Dataframe_List_All, Path){
   StartTime = Sys.time()
   Iterator = 1
@@ -18,6 +27,17 @@ PlotAllYears_All_Albufeiras = function(Dataframe_List_All, Path){
   print(paste0(noquote("Total Time spent plotting (HH:MM:SS): "), noquote(TotalTime)))
 }
 
+#' Plots and exports Water Percentage of the input Dataframes. Produces several plots of a time series of Water Percentage of all the ZOI included in the arguments;
+#' This function overlaps the graphs from Dataframe_List_All and Dataframe_List_All_2;
+#'
+#' @param Dataframe_List_All a list of lists, with the first element being a list of dataframes. Each dataframe represents a Year of of Product for ZOI 1; Usually Binary_NDVI product
+#' @param Dataframe_List_All_2 a list of lists, with the first element being a list of dataframes. Each dataframe represents a Year of of Product for ZOI 1; Usually the Combo product
+#' @param Path a string representing an export path to export the graphs;
+#'
+#' @return Doesnt return anything, used to plot graphs and export them.
+#' @export
+#'
+#' @examples Data too large, check Vignette;
 PlotAllYears_All_Albufeiras2 = function(Dataframe_List_All, Dataframe_List_All_2, Path){
   StartTime = Sys.time()
   Iterator = 1
@@ -28,10 +48,10 @@ PlotAllYears_All_Albufeiras2 = function(Dataframe_List_All, Dataframe_List_All_2
     Melted_MegaDataframe2 = melt(MegaDataframe2, id.vars=c("Year","Month", "WaterPixels", "NotWaterPixels", "TotalPixel", "TotalWaterAreaM2", "TotalAreaM2", "WaterPercentage"))
     png(paste0(Path, "/Albufeira_", Iterator, ".png"), width = 2560, height = 1440, res = 200)
     print(ggplot() +
-            geom_area(data = Melted_MegaDataframe2, mapping = aes(x = factor(Month, level = c("Outubro","Novembro", "Dezembro", "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro")), y = WaterPercentage, group = 1), colour = "black", fill = "#85e085", alpha = 0.5) + 
+            geom_area(data = Melted_MegaDataframe2, mapping = aes(x = factor(Month, level = c("Outubro","Novembro", "Dezembro", "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro")), y = WaterPercentage, group = 1), colour = "black", fill = "#85e085", alpha = 0.5) +
             geom_line(data = Melted_MegaDataframe2, mapping = aes(x = factor(Month, level = c("Outubro","Novembro", "Dezembro", "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro")), y = WaterPercentage, group = 1)) +
             geom_point(data = Melted_MegaDataframe2, mapping = aes(x = factor(Month, level = c("Outubro","Novembro", "Dezembro", "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro")), y = WaterPercentage, group = 1)) +
-            geom_area(data = Melted_MegaDataframe, mapping = aes(x = factor(Month, level = c("Outubro","Novembro", "Dezembro", "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro")), y = WaterPercentage, group = 1), colour = "black", fill = "#ff0000", alpha = 0.5) + 
+            geom_area(data = Melted_MegaDataframe, mapping = aes(x = factor(Month, level = c("Outubro","Novembro", "Dezembro", "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro")), y = WaterPercentage, group = 1), colour = "black", fill = "#ff0000", alpha = 0.5) +
             geom_line(data = Melted_MegaDataframe, mapping = aes(x = factor(Month, level = c("Outubro","Novembro", "Dezembro", "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro")), y = WaterPercentage, group = 1)) +
             geom_point(data = Melted_MegaDataframe, mapping = aes(x = factor(Month, level = c("Outubro","Novembro", "Dezembro", "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro")), y = WaterPercentage, group = 1)) +
             ggtitle(paste0("Conteudo de Agua na Albufeira ", Iterator)) +

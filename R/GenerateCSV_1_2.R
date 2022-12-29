@@ -1,3 +1,16 @@
+#' Generates a csv file that contains several rows of information, namely number of Water Cells and Non Water Cells, prints time spent and names the files acordding to the Threshold provided. Accepts a list of lists where each element is a list of all 12 months for a specific year and specific ZOI;
+#'
+#' @param Albufeira_List_of_Lists A list of lists, where the first element is a list of all 12 months of a product for ZOI 1; Usually a list of lists of Binary_NDVI cut to each ZOI;
+#' @param ExportPath a path to export the .csv files;
+#' @param Year a string to represent the agricultural year, ex: 2017 or Ano Agricola 2017
+#' @param ID_list a list of IDs representing the amount of unique shapes inside the original shapefile, usually created asa global variable using CropShapefile_ExportToPath;
+#' @param ProductName a Product Name to be printed in the files name, ex: BinaryNDVI or Combo;
+#' @param Threshold1 a number representing the threshold used in the files that originate the csv, like 0 for NDVI;
+#'
+#' @return returns an organized list of dataframes that include a dataframe for each ZOI, representing an entire year of imagery, with stats such as number of Water Cells, Non Water cells, etc;
+#' @export
+#'
+#' @examples Data too large, check Vignette.
 GenerateCSV = function(Albufeira_List_of_Lists, ExportPath, Year, ID_list, ProductName, Threshold1){
   StartTime = Sys.time()
   MonthNames = list("Outubro","Novembro", "Dezembro", "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro")
@@ -32,6 +45,20 @@ GenerateCSV = function(Albufeira_List_of_Lists, ExportPath, Year, ID_list, Produ
   return(Albufeira_DataframeList)
 }
 
+#' Generates a csv file that contains several rows of information, namely number of Water Cells and Non Water Cells, prints time spent and names the files acordding to the Threshold provided. Accepts a list of lists where each element is a list of all 12 months for a specific year and specific ZOI;
+#'
+#' @param Albufeira_List_of_Lists A list of lists, where the first element is a list of all 12 months of a product for ZOI 1; Usually a list of lists of Binary_NDVI cut to each ZOI;
+#' @param ExportPath a path to export the .csv files;
+#' @param Year a string to represent the agricultural year, ex: 2017 or Ano Agricola 2017
+#' @param ID_list a list of IDs representing the amount of unique shapes inside the original shapefile, usually created asa global variable using CropShapefile_ExportToPath;
+#' @param ProductName a Product Name to be printed in the files name, ex: BinaryNDVI or Combo;
+#' @param Threshold1 a number representing the threshold used in the files that originate the csv, like 0 for NDVI;
+#' @param Threshold2 a number representing the threshold used in the files that originate the csv, mostly 800 for RGBSum;
+#'
+#' @return returns an organized list of dataframes that include a dataframe for each ZOI, representing an entire year of imagery, with stats such as number of Water Cells, Non Water cells, etc;
+#' @export
+#'
+#' @examples Data too large, check Vignette.
 GenerateCSV2 = function(Albufeira_List_of_Lists, ExportPath, Year, ID_list, ProductName, Threshold1, Threshold2){
   StartTime = Sys.time()
   MonthNames = list("Outubro","Novembro", "Dezembro", "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro")

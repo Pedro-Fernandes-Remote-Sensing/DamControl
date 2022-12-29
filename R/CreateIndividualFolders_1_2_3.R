@@ -1,12 +1,12 @@
-#' Title
+#' Creates folders for each individual ZOI;
 #'
-#' @param FolderDestinationPath
-#' @param ID_list
+#' @param FolderDestinationPath a destination path to the folders being created, as a string;
+#' @param ID_list a list of IDs representing the amount of unique shapes inside the original shapefile, usually created asa global variable using CropShapefile_ExportToPath;
 #'
-#' @return
+#' @return returns nothing, used to create folders;
 #' @export
 #'
-#' @examples
+#' @examples Data too large, check Vignette.
 CreateIndividualFolders = function(FolderDestinationPath, ID_list){
   StartTime = Sys.time()
   for (ID in ID_list){
@@ -21,16 +21,16 @@ CreateIndividualFolders = function(FolderDestinationPath, ID_list){
   print(paste0(noquote("Total Time spent creating Albufeira_X Folders (HH:MM:SS): "), noquote(TotalTime)))
 }
 
-#' Title
+#' Creates folders for each individual ZOI, with threshold imbued in the folder name;
 #'
-#' @param FolderDestinationPath
-#' @param ID_list
-#' @param Threshold_List
+#' @param FolderDestinationPath a destination path to the folders being created, as a string;
+#' @param ID_list a list of IDs representing the amount of unique shapes inside the original shapefile, usually created asa global variable using CropShapefile_ExportToPath;
+#' @param Threshold_List a list of thresholds, usually just one, representing the threshold for either the NDVI or RGBSum, in order to create properly named folders;
 #'
-#' @return
+#' @return returns nothing, used to create folders;
 #' @export
 #'
-#' @examples
+#' @examples Data too large, check Vignette.
 CreateIndividualFolders2 = function(FolderDestinationPath, ID_list, Threshold_List){
   StartTime = Sys.time()
   for (Threshold in Threshold_List){
@@ -47,17 +47,17 @@ CreateIndividualFolders2 = function(FolderDestinationPath, ID_list, Threshold_Li
   print(paste0(noquote("Total Time spent creating Albufeira_X_Threshold_X Folders (HH:MM:SS): "), noquote(TotalTime)))
 }
 
-#' Title
+#' Creates folders for each individual ZOI, with both thresholds imbued in the folder name;
 #'
-#' @param FolderDestinationPath
-#' @param ID_list
-#' @param Threshold_List
-#' @param Threshold_List_2
+#' @param FolderDestinationPath a destination path to the folders being created, as a string;
+#' @param ID_list a list of IDs representing the amount of unique shapes inside the original shapefile, usually created asa global variable using CropShapefile_ExportToPath;
+#' @param Threshold_List a list of thresholds, usually just one, representing the threshold for either the NDVI or RGBSum, in order to create properly named folders;
+#' @param Threshold_List_2 a list of thresholds, usually just one, representing the threshold for either the NDVI or RGBSum, in order to create properly named folders; Obviously use different thresholds for these two arguments;
 #'
-#' @return
+#' @return returns nothing, used to create folders;
 #' @export
 #'
-#' @examples
+#' @examples Data too large, check Vignette.
 CreateIndividualFolders3 = function(FolderDestinationPath, ID_list, Threshold_List, Threshold_List_2){
   StartTime = Sys.time()
   for (Threshold2 in Threshold_List_2){
