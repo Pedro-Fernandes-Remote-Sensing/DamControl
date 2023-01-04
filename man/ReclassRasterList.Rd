@@ -21,6 +21,3 @@ a list of reclassified rasters acording to the Vetor provided in the arguments;
 \description{
 Reclassifies a list of rasters acording to the vector provided. The Vectors are generated with the correct formatting by using the function VectorBuilder. Vector1 has NDVI threshold, Vetor 2 has RGMSum threshold and Vetor 3 has the combo to used when reclassifyng the Combo;
 }
-\examples{
-Data too large, check Vignette;
-}

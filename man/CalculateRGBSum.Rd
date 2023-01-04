@@ -15,6 +15,3 @@ a list of rasters, with each raster representing the sum of the first 3 bands co
 \description{
 Calculates the sum of the first 3 bands of a raster, for each raster in a list and prints time spent;
 }
-\examples{
-Data is too large, check Vignette.
-}

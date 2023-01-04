@@ -29,6 +29,3 @@ doesnt return anything. Meant to be used as an export tool;
 \description{
 Exports a list of rasters and appends the month name to the end, assuming the rasters are ordered by agricultural year; Also prints time spent;
 }
-\examples{
-Data too large, check Vignette.
-}

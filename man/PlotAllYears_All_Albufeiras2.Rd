@@ -21,6 +21,3 @@ Doesnt return anything, used to plot graphs and export them.
 Plots and exports Water Percentage of the input Dataframes. Produces several plots of a time series of Water Percentage of all the ZOI included in the arguments;
 This function overlaps the graphs from Dataframe_List_All and Dataframe_List_All_2;
 }
-\examples{
-Data too large, check Vignette;
-}

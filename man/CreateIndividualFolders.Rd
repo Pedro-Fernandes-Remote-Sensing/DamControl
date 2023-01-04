@@ -17,6 +17,3 @@ returns nothing, used to create folders;
 \description{
 Creates folders for each individual ZOI;
 }
-\examples{
-Data too large, check Vignette.
-}

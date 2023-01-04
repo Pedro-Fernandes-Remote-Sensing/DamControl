@@ -41,6 +41,3 @@ a list of lists, with the first list representing ZOI_1 and element 1 of the fir
 \description{
 Takes a list of products, for example Binary_NDVI_2016, and cuts it to each individual ZOI, exporting the results to a certain path;
 }
-\examples{
-Data too large, check Vignette.
-}

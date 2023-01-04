@@ -5,8 +5,6 @@
 #'
 #' @return has no returns. Meant to be used just to create folders;
 #' @export
-#'
-#' @examples CreateOutputFoldersALL()
 CreateOutputFoldersALL = function(Year_List, OUTPUT_Path){
   for (Year in Year_List){
     StartTime = Sys.time()
@@ -29,7 +27,7 @@ CreateOutputFoldersALL = function(Year_List, OUTPUT_Path){
   dir.create(paste0(OUTPUT_Path, "/Albufeiras_Individuais_Graficos_Overlap"))
   dir.create(paste0(OUTPUT_Path, "/Albufeiras_Individuais_Shapefiles"))
   EndTime = Sys.time()
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent

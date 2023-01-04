@@ -26,6 +26,3 @@ returns nothing, used to create folders;
 \description{
 Creates folders for each individual ZOI, with both thresholds imbued in the folder name;
 }
-\examples{
-Data too large, check Vignette.
-}

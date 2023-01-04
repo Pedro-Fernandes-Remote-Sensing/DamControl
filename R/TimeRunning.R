@@ -5,10 +5,8 @@
 #'
 #' @return prints time spent;
 #' @export
-#'
-#' @examples NULL
 TimeRunning <- function(StartTime, EndTime) {
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent

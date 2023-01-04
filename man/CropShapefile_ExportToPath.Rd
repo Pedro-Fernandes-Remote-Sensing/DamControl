@@ -19,6 +19,3 @@ a list of individual shapefiles, ordered by OBJECTID;
 \description{
 Crops a shapefile into all its individual pieces, by OBJECTID, and exports all the individual shapefiles into ExportPath, and prints time spent; Also produces a global variable called ID_List representing a list of IDs taken from the original shapefile;
 }
-\examples{
-Data too large, check Vignette.
-}

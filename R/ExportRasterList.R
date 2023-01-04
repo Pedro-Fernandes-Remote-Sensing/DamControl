@@ -7,21 +7,20 @@
 #' @param StringFinished_All a string to be printed in the end;
 #'
 #' @return doesnt return anything. Meant to be used as an export tool;
+#' @importFrom raster writeRaster
 #' @export
-#'
-#' @examples Data too large, check Vignette.
 ExportRasterList = function(RasterList, Path, GeneralFileName, StringFinished_One, StringFinished_All){
   StartTime = Sys.time()
   MonthNames = list("(1)Outubro","(2)Novembro", "(3)Dezembro", "(4)Janeiro", "(5)Fevereiro", "(6)Marco", "(7)Abril", "(8)Maio", "(9)Junho", "(10)Julho", "(11)Agosto", "(12)Setembro")
   Iterator = 1
   for (Raster in RasterList) {
-    writeRaster(Raster, filename = file.path(Path,paste0(GeneralFileName, MonthNames[Iterator])), format = "GTiff")
+    raster::writeRaster(Raster, filename = file.path(Path,paste0(GeneralFileName, MonthNames[Iterator])), format = "GTiff")
     print(noquote(paste0(StringFinished_One, Iterator)))
     Iterator = Iterator + 1
   }
   print(noquote(paste0(StringFinished_All, Path)))
   EndTime = Sys.time()
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent

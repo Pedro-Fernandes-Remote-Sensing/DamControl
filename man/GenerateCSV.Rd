@@ -32,6 +32,3 @@ returns an organized list of dataframes that include a dataframe for each ZOI, r
 \description{
 Generates a csv file that contains several rows of information, namely number of Water Cells and Non Water Cells, prints time spent and names the files acordding to the Threshold provided. Accepts a list of lists where each element is a list of all 12 months for a specific year and specific ZOI;
 }
-\examples{
-Data too large, check Vignette.
-}

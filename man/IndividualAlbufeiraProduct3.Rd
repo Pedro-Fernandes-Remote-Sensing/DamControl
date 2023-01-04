@@ -37,14 +37,13 @@ IndividualAlbufeiraProduct3(
 
 \item{StringOneAlbufeira}{a string to print as each complete ZOI is finished;}
 
-\item{StringAll}{a string to print in the end;}
+\item{StringAllOne}{a string to print as each combination for each ZOI is finished;}
+
+\item{StringAllAll}{a string to print in the end, as every combination for all ZOI are finished;}
 }
 \value{
 a list of lists, with the first list representing ZOI_1 and element 1 of the first list being the first month corresponding to the first ZOI;
 }
 \description{
 Takes a list of products, for example Binary_Combo_2016, and cuts it to each individual ZOI, exporting the results to a certain path;
-}
-\examples{
-Data too large, check Vignette.
 }

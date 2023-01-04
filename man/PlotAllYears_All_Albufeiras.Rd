@@ -17,6 +17,3 @@ Doesnt return anything, used to plot graphs and export them.
 \description{
 Plots and exports Water Percentage of the input Dataframes. Produces several plots of a time series of Water Percentage of all the ZOI included in the arguments;
 }
-\examples{
-Data too large, check Vignette;
-}

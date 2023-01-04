@@ -3,21 +3,20 @@
 #' @param FilePathList a list of file paths. This is usually obtained through list.files with path = location_of_files, pattern = string_to_detect_files, full.names = TRUE
 #'
 #' @return a list of "Bricks", an object usable by R that represents a file with several layers, usually a raster;
+#' @importFrom raster brick
 #' @export
-#'
-#' @examples Data is too large, check Vignette.
 BuildBrickList = function(FilePathList){
   StartTime = Sys.time()
   CompositesBrickList = list()
   Iterator = 1
   for (File in FilePathList) {
-    CompositesBrickList[[Iterator]] = brick(File)
+    CompositesBrickList[[Iterator]] = raster::brick(File)
     print(noquote(paste0("Built Brick ", Iterator)))
     Iterator = Iterator + 1
   }
   print(noquote("All Bricks Built"))
   EndTime = Sys.time()
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent

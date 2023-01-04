@@ -6,24 +6,27 @@
 #' @param ShapeName a string representing the shapefiles name;
 #'
 #' @return a list of rasters cut to the zone of the shapefile presented in the arguments;
+#' @importFrom sf read_sf
+#' @importFrom sf st_zm
+#' @importFrom raster crop
+#' @importFrom raster mask
+#' @importFrom raster extent
 #' @export
-#'
-#' @examples Data too large, check Vignette.
 CropAndMask = function(BrickList, ShapefilePath, ShapeName){
   StartTime = Sys.time()
   CroppedMaskedList = list()
-  Shapefile = read_sf(ShapefilePath, ShapeName)
-  ShapefileXY = st_zm(Shapefile)
+  Shapefile = sf::read_sf(ShapefilePath, ShapeName)
+  ShapefileXY = sf::st_zm(Shapefile)
   Iterator = 1
   for (File in BrickList){
-    Cropped = crop(File, extent(ShapefileXY))
-    Masked = mask(Cropped, ShapefileXY)
+    Cropped = raster::crop(File, raster::extent(ShapefileXY))
+    Masked = raster::mask(Cropped, ShapefileXY)
     print(noquote(paste0("Cropped and Masked Brick ", Iterator)))
     CroppedMaskedList[[Iterator]] = Masked
     Iterator = Iterator + 1
   }
   EndTime = Sys.time()
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent

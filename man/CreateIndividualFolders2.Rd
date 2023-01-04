@@ -19,6 +19,3 @@ returns nothing, used to create folders;
 \description{
 Creates folders for each individual ZOI, with threshold imbued in the folder name;
 }
-\examples{
-Data too large, check Vignette.
-}

@@ -15,6 +15,3 @@ a list of "Bricks", an object usable by R that represents a file with several la
 \description{
 Build a "Brick" object list from a List of FilePaths, and prints time spent;
 }
-\examples{
-Data is too large, check Vignette.
-}

@@ -17,6 +17,3 @@ prints time spent;
 \description{
 A gemeral function to collect time spent doing X task. Write StartTime = Sys.time(), then your code, then EndTime = Sys.time(), then
 }
-\examples{
-NULL
-}

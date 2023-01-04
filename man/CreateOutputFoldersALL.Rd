@@ -17,6 +17,3 @@ has no returns. Meant to be used just to create folders;
 \description{
 Creates some of the folders required to organize outputs in the a certain provided path and prints time spent;
 }
-\examples{
-CreateOutputFoldersALL()
-}

@@ -16,6 +16,3 @@ returns a list of Dataframe lists, where the first element is a list representin
 \description{
 Organizes the argument into a list of lists. The first element is a list of dataframes that represent all the years of a particular ZOI;
 }
-\examples{
-Data too large, check Vignette.
-}

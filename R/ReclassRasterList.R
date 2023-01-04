@@ -6,22 +6,21 @@
 #' @param StringFinished_All a string to print in the end;
 #'
 #' @return a list of reclassified rasters acording to the Vetor provided in the arguments;
+#' @importFrom raster reclassify
 #' @export
-#'
-#' @examples Data too large, check Vignette;
 ReclassRasterList = function(RasterList, Vetor, StringFinished_One, StringFinished_All){
   StartTime = Sys.time()
   MatrizReclassificacao = matrix(Vetor, ncol = 3, byrow = TRUE) #byrow enche a matriz por linhas em vez de colunas
   RasterReclassList = list()
   Iterator = 1
   for (Raster in RasterList){
-    RasterReclassList[[Iterator]] = reclassify(Raster, MatrizReclassificacao, include.lowest = TRUE) #include.lowest faz com que seja >= -1 ate < 0 seja 1 em vez de >-1 e <=0
+    RasterReclassList[[Iterator]] = raster::reclassify(Raster, MatrizReclassificacao, include.lowest = TRUE) #include.lowest faz com que seja >= -1 ate < 0 seja 1 em vez de >-1 e <=0
     print(noquote(paste0(StringFinished_One, Iterator)))
     Iterator = Iterator + 1
   }
   print(noquote(StringFinished_All))
   EndTime = Sys.time()
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent

@@ -10,9 +10,11 @@
 #' @param StringAll a string to print in the end;
 #'
 #' @return a list of lists, with the first list representing ZOI_1 and element 1 of the first list being the first month corresponding to the first ZOI;
+#' @importFrom raster crop
+#' @importFrom raster mask
+#' @importFrom raster extent
+#' @importFrom raster writeRaster
 #' @export
-#'
-#' @examples Data too large, check Vignette.
 IndividualAlbufeiraProduct = function(ProductList_AllThreshold, AlbufeiraShapefileList, ExportPath, ID_list, StringName, StringOne, StringOneAlbufeira, StringAll){
   StartTime = Sys.time()
   Iterator = 1
@@ -24,10 +26,10 @@ IndividualAlbufeiraProduct = function(ProductList_AllThreshold, AlbufeiraShapefi
   for (AlbufeiraShapefile in AlbufeiraShapefileList){
     TrueExportPath = paste0(ExportPath, "/Albufeira_", ID_list[[Iterator2]])
     for (BinaryProduct in ProductList_AllThreshold){
-      Product_Cropped = crop(BinaryProduct, extent(AlbufeiraShapefile))
-      Product_Cropped_Masked = mask(Product_Cropped, AlbufeiraShapefile)
+      Product_Cropped = raster::crop(BinaryProduct, raster::extent(AlbufeiraShapefile))
+      Product_Cropped_Masked = raster::mask(Product_Cropped, AlbufeiraShapefile)
       AlbufeiraProduct[[Iterator]] = Product_Cropped_Masked
-      writeRaster(Product_Cropped_Masked, filename = file.path(TrueExportPath, paste0(StringName, ID_list[[Iterator2]],"_", MonthNames[[MonthNamesIterator]])), format = "GTiff")
+      raster::writeRaster(Product_Cropped_Masked, filename = file.path(TrueExportPath, paste0(StringName, ID_list[[Iterator2]],"_", MonthNames[[MonthNamesIterator]])), format = "GTiff")
       print(noquote(paste0(StringOne, Iterator, " for Albufeira ", ID_list[[Iterator2]])))
       Iterator = Iterator + 1
       MonthNamesIterator = MonthNamesIterator + 1
@@ -41,7 +43,7 @@ IndividualAlbufeiraProduct = function(ProductList_AllThreshold, AlbufeiraShapefi
   Iterator2 = 1
   print(noquote(paste0(StringAll)))
   EndTime = Sys.time()
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent
@@ -63,9 +65,11 @@ IndividualAlbufeiraProduct = function(ProductList_AllThreshold, AlbufeiraShapefi
 #' @param StringAll a string to print in the end;
 #'
 #' @return a list of lists, with the first list representing ZOI_1 and element 1 of the first list being the first month corresponding to the first ZOI;
+#' @importFrom raster crop
+#' @importFrom raster mask
+#' @importFrom raster extent
+#' @importFrom raster writeRaster
 #' @export
-#'
-#' @examples Data too large, check Vignette.
 IndividualAlbufeiraProduct2 = function(ProductList_AllThreshold, AlbufeiraShapefileList, ExportPath, ID_list, Threshold_List, StringName, StringOne, StringOneAlbufeira, StringAll){
   StartTime = Sys.time()
   Iterator = 1
@@ -79,10 +83,10 @@ IndividualAlbufeiraProduct2 = function(ProductList_AllThreshold, AlbufeiraShapef
     for (AlbufeiraShapefile in AlbufeiraShapefileList){
       TrueExportPath = paste0(ExportPath, "/Albufeira_", ID_list[[Iterator2]], "_Threshold_", Threshold)
       for (BinaryProduct in ProductList_AllThreshold){
-        Product_Cropped = crop(BinaryProduct, extent(AlbufeiraShapefile))
-        Product_Cropped_Masked = mask(Product_Cropped, AlbufeiraShapefile)
+        Product_Cropped = raster::crop(BinaryProduct, raster::extent(AlbufeiraShapefile))
+        Product_Cropped_Masked = raster::mask(Product_Cropped, AlbufeiraShapefile)
         AlbufeiraProduct[[Iterator]] = Product_Cropped_Masked
-        writeRaster(Product_Cropped_Masked, filename = file.path(TrueExportPath, paste0(StringName, ID_list[[Iterator2]],"_", MonthNames[[MonthNamesIterator]], "_", Threshold_List[[Iterator3]])), format = "GTiff")
+        raster::writeRaster(Product_Cropped_Masked, filename = file.path(TrueExportPath, paste0(StringName, ID_list[[Iterator2]],"_", MonthNames[[MonthNamesIterator]], "_", Threshold_List[[Iterator3]])), format = "GTiff")
         print(noquote(paste0(StringOne, Iterator, " for Albufeira ", ID_list[[Iterator2]])))
         Iterator = Iterator + 1
         MonthNamesIterator = MonthNamesIterator + 1
@@ -99,7 +103,7 @@ IndividualAlbufeiraProduct2 = function(ProductList_AllThreshold, AlbufeiraShapef
     print(noquote(paste0(StringAll, " with Threshold = ", Threshold_ID)))
   }
   EndTime = Sys.time()
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent
@@ -119,12 +123,15 @@ IndividualAlbufeiraProduct2 = function(ProductList_AllThreshold, AlbufeiraShapef
 #' @param StringName a string to name the files, usually XXX_ as the function will attach the name of the month in the end;
 #' @param StringOne a string to print as each product is finished;
 #' @param StringOneAlbufeira a string to print as each complete ZOI is finished;
-#' @param StringAll a string to print in the end;
+#' @param StringAllOne a string to print as each combination for each ZOI is finished;
+#' @param StringAllAll a string to print in the end, as every combination for all ZOI are finished;
 #'
 #' @return a list of lists, with the first list representing ZOI_1 and element 1 of the first list being the first month corresponding to the first ZOI;
+#' @importFrom raster crop
+#' @importFrom raster mask
+#' @importFrom raster extent
+#' @importFrom raster writeRaster
 #' @export
-#'
-#' @examples Data too large, check Vignette.
 IndividualAlbufeiraProduct3 = function(ProductList_AllThreshold, AlbufeiraShapefileList, ExportPath, ID_list, Threshold_List, Threshold_List_2, StringName, StringOne, StringOneAlbufeira, StringAllOne, StringAllAll){
   StartTime = Sys.time()
   Iterator = 1
@@ -140,10 +147,10 @@ IndividualAlbufeiraProduct3 = function(ProductList_AllThreshold, AlbufeiraShapef
       for (AlbufeiraShapefile in AlbufeiraShapefileList){
         TrueExportPath = paste0(ExportPath, "/Albufeira_", ID_list[[Iterator2]], "_Threshold_", Threshold, "_Threshold_", Threshold2)
         for (BinaryProduct in ProductList_AllThreshold[[Iterator3]][[Iterator4]]){
-          Product_Cropped = crop(BinaryProduct, extent(AlbufeiraShapefile))
-          Product_Cropped_Masked = mask(Product_Cropped, AlbufeiraShapefile)
+          Product_Cropped = raster::crop(BinaryProduct, raster::extent(AlbufeiraShapefile))
+          Product_Cropped_Masked = raster::mask(Product_Cropped, AlbufeiraShapefile)
           AlbufeiraProduct[[Iterator]] = Product_Cropped_Masked
-          writeRaster(Product_Cropped_Masked, filename = file.path(TrueExportPath, paste0(StringName, ID_list[[Iterator2]],"_", MonthNames[[MonthNamesIterator]], "_", Threshold_List[[Iterator3]], "_", Threshold_List_2[[Iterator4]])), format = "GTiff")
+          raster::writeRaster(Product_Cropped_Masked, filename = file.path(TrueExportPath, paste0(StringName, ID_list[[Iterator2]],"_", MonthNames[[MonthNamesIterator]], "_", Threshold_List[[Iterator3]], "_", Threshold_List_2[[Iterator4]])), format = "GTiff")
           print(noquote(paste0(StringOne, Iterator, " for Albufeira ", ID_list[[Iterator2]])))
           Iterator = Iterator + 1
           MonthNamesIterator = MonthNamesIterator + 1
@@ -164,7 +171,7 @@ IndividualAlbufeiraProduct3 = function(ProductList_AllThreshold, AlbufeiraShapef
   }
   print(noquote(paste0(StringAllAll)))
   EndTime = Sys.time()
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent

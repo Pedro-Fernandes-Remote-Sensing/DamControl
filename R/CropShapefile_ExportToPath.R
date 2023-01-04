@@ -1,3 +1,5 @@
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("ID_list"))
+ID_list <- list()
 #' Crops a shapefile into all its individual pieces, by OBJECTID, and exports all the individual shapefiles into ExportPath, and prints time spent; Also produces a global variable called ID_List representing a list of IDs taken from the original shapefile;
 #'
 #' @param ShapefilePath a string representing a path to the shapefile to be cut;
@@ -5,20 +7,22 @@
 #' @param ExportPath a string representing the path to which the individual shapefiles are to be exported;
 #'
 #' @return a list of individual shapefiles, ordered by OBJECTID;
+#' @importFrom rgdal readOGR
+#' @importFrom rgdal writeOGR
+#' @importFrom raster crop
+#' @importFrom raster extent
 #' @export
-#'
-#' @examples Data too large, check Vignette.
 CropShapefile_ExportToPath = function(ShapefilePath, ShapefileName, ExportPath){
   StartTime = Sys.time()
-  Shapefile = readOGR(ShapefilePath, ShapefileName)
+  Shapefile = rgdal::readOGR(ShapefilePath, ShapefileName)
   Iterator = 1
   Iterator2 = 1
   ID_list <<- list()
   AlbufeirasShapefile_List = list()
   for (ObjectID in Shapefile$OBJECTID){
     Albufeira_Individual <- Shapefile[Shapefile$OBJECTID == ObjectID,]
-    Albufeira_Cropped = crop(Shapefile, extent(Albufeira_Individual))
-    writeOGR(Albufeira_Cropped, ExportPath, paste0("/Albufeira_", ObjectID), driver = "ESRI Shapefile")
+    Albufeira_Cropped = raster::crop(Shapefile, raster::extent(Albufeira_Individual))
+    rgdal::writeOGR(Albufeira_Cropped, ExportPath, paste0("/Albufeira_", ObjectID), driver = "ESRI Shapefile")
     ID = as.integer(ObjectID)
     ID_list[[Iterator]] <<- ID
     print(noquote(paste0("Cropped and Exported Albufeira "), ID))
@@ -28,7 +32,7 @@ CropShapefile_ExportToPath = function(ShapefilePath, ShapefileName, ExportPath){
   }
   print(noquote(paste0("Cropped and Exported Albufeiras to ", ExportPath)))
   EndTime = Sys.time()
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent

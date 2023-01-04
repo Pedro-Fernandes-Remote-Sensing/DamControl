@@ -17,6 +17,3 @@ a list of the sum between the two arguments. Its original use is to return a ras
 \description{
 Adds two raster lists together, first element with first element and so on, and prints time spent;
 }
-\examples{
-Data is too large, check Vignette.
-}

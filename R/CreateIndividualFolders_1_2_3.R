@@ -5,15 +5,13 @@
 #'
 #' @return returns nothing, used to create folders;
 #' @export
-#'
-#' @examples Data too large, check Vignette.
 CreateIndividualFolders = function(FolderDestinationPath, ID_list){
   StartTime = Sys.time()
   for (ID in ID_list){
     dir.create(paste0(FolderDestinationPath, "/Albufeira_", ID))
   }
   EndTime = Sys.time()
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent
@@ -29,8 +27,6 @@ CreateIndividualFolders = function(FolderDestinationPath, ID_list){
 #'
 #' @return returns nothing, used to create folders;
 #' @export
-#'
-#' @examples Data too large, check Vignette.
 CreateIndividualFolders2 = function(FolderDestinationPath, ID_list, Threshold_List){
   StartTime = Sys.time()
   for (Threshold in Threshold_List){
@@ -39,7 +35,7 @@ CreateIndividualFolders2 = function(FolderDestinationPath, ID_list, Threshold_Li
     }
   }
   EndTime = Sys.time()
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent
@@ -56,8 +52,6 @@ CreateIndividualFolders2 = function(FolderDestinationPath, ID_list, Threshold_Li
 #'
 #' @return returns nothing, used to create folders;
 #' @export
-#'
-#' @examples Data too large, check Vignette.
 CreateIndividualFolders3 = function(FolderDestinationPath, ID_list, Threshold_List, Threshold_List_2){
   StartTime = Sys.time()
   for (Threshold2 in Threshold_List_2){
@@ -68,7 +62,7 @@ CreateIndividualFolders3 = function(FolderDestinationPath, ID_list, Threshold_Li
     }
   }
   EndTime = Sys.time()
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent

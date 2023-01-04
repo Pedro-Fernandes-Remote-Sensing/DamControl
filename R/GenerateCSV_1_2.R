@@ -8,9 +8,9 @@
 #' @param Threshold1 a number representing the threshold used in the files that originate the csv, like 0 for NDVI;
 #'
 #' @return returns an organized list of dataframes that include a dataframe for each ZOI, representing an entire year of imagery, with stats such as number of Water Cells, Non Water cells, etc;
+#' @importFrom raster cellStats
+#' @importFrom utils write.csv2
 #' @export
-#'
-#' @examples Data too large, check Vignette.
 GenerateCSV = function(Albufeira_List_of_Lists, ExportPath, Year, ID_list, ProductName, Threshold1){
   StartTime = Sys.time()
   MonthNames = list("Outubro","Novembro", "Dezembro", "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro")
@@ -20,8 +20,8 @@ GenerateCSV = function(Albufeira_List_of_Lists, ExportPath, Year, ID_list, Produ
     AlbufeiraDataframe = data.frame(Year = integer(), Month = character(), WaterPixels = integer(), NotWaterPixels = integer(), TotalPixel = integer(), TotalWaterAreaM2 = integer(), TotalAreaM2 = integer(), WaterPercentage = integer())
     MonthNamesIterator = 1
     for (BinaryNDVI in Albufeira) {
-      WaterCells = cellStats(BinaryNDVI == 1, sum)
-      NonWaterCells = cellStats(BinaryNDVI == 0, sum)
+      WaterCells = raster::cellStats(BinaryNDVI == 1, sum)
+      NonWaterCells = raster::cellStats(BinaryNDVI == 0, sum)
       TotalCells = WaterCells + NonWaterCells
       TotalWaterAreaM2 = WaterCells*100
       TotalAreaM2 = TotalCells*100
@@ -30,13 +30,13 @@ GenerateCSV = function(Albufeira_List_of_Lists, ExportPath, Year, ID_list, Produ
       MonthNamesIterator = MonthNamesIterator + 1
     }
     Albufeira_DataframeList[[Iterator]] = AlbufeiraDataframe
-    write.csv2(AlbufeiraDataframe, paste0(ExportPath, "/csv_Albufeira_", ID_list[[Iterator]], "_", ProductName, "_Threshold_", Threshold1,  ".csv"), row.names = FALSE, quote = FALSE)
+    utils::write.csv2(AlbufeiraDataframe, paste0(ExportPath, "/csv_Albufeira_", ID_list[[Iterator]], "_", ProductName, "_Threshold_", Threshold1,  ".csv"), row.names = FALSE, quote = FALSE)
     print(noquote(paste0("Finished writing csv for Albufeira ", ID_list[[Iterator]])))
     Iterator = Iterator + 1
   }
   print(noquote(paste0("Finished writing csv for all Albufeiras")))
   EndTime = Sys.time()
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent
@@ -56,9 +56,9 @@ GenerateCSV = function(Albufeira_List_of_Lists, ExportPath, Year, ID_list, Produ
 #' @param Threshold2 a number representing the threshold used in the files that originate the csv, mostly 800 for RGBSum;
 #'
 #' @return returns an organized list of dataframes that include a dataframe for each ZOI, representing an entire year of imagery, with stats such as number of Water Cells, Non Water cells, etc;
+#' @importFrom raster cellStats
+#' @importFrom utils write.csv2
 #' @export
-#'
-#' @examples Data too large, check Vignette.
 GenerateCSV2 = function(Albufeira_List_of_Lists, ExportPath, Year, ID_list, ProductName, Threshold1, Threshold2){
   StartTime = Sys.time()
   MonthNames = list("Outubro","Novembro", "Dezembro", "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro")
@@ -68,8 +68,8 @@ GenerateCSV2 = function(Albufeira_List_of_Lists, ExportPath, Year, ID_list, Prod
     AlbufeiraDataframe = data.frame(Year = integer(), Month = character(), WaterPixels = integer(), NotWaterPixels = integer(), TotalPixel = integer(), TotalWaterAreaM2 = integer(), TotalAreaM2 = integer(), WaterPercentage = integer())
     MonthNamesIterator = 1
     for (BinaryNDVI in Albufeira) {
-      WaterCells = cellStats(BinaryNDVI == 1, sum)
-      NonWaterCells = cellStats(BinaryNDVI == 0, sum)
+      WaterCells = raster::cellStats(BinaryNDVI == 1, sum)
+      NonWaterCells = raster::cellStats(BinaryNDVI == 0, sum)
       TotalCells = WaterCells + NonWaterCells
       TotalWaterAreaM2 = WaterCells*100
       TotalAreaM2 = TotalCells*100
@@ -78,13 +78,13 @@ GenerateCSV2 = function(Albufeira_List_of_Lists, ExportPath, Year, ID_list, Prod
       MonthNamesIterator = MonthNamesIterator + 1
     }
     Albufeira_DataframeList[[Iterator]] = AlbufeiraDataframe
-    write.csv2(AlbufeiraDataframe, paste0(ExportPath, "/csv_Albufeira_", ID_list[[Iterator]], "_", ProductName, "_ThresholdNDVI_", Threshold1, "_ThresholdRGBSum_", Threshold2,  ".csv"), row.names = FALSE, quote = FALSE)
+    utils::write.csv2(AlbufeiraDataframe, paste0(ExportPath, "/csv_Albufeira_", ID_list[[Iterator]], "_", ProductName, "_ThresholdNDVI_", Threshold1, "_ThresholdRGBSum_", Threshold2,  ".csv"), row.names = FALSE, quote = FALSE)
     print(noquote(paste0("Finished writing csv for Albufeira ", ID_list[[Iterator]])))
     Iterator = Iterator + 1
   }
   print(noquote(paste0("Finished writing csv for all Albufeiras")))
   EndTime = Sys.time()
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent

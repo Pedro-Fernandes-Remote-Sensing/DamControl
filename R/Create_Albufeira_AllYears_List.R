@@ -5,8 +5,6 @@
 #'
 #' @return returns a list of Dataframe lists, where the first element is a list representing all the dataframes for all the years of the first ZOI;
 #' @export
-#'
-#' @examples Data too large, check Vignette.
 Create_Albufeiras_AllYears_List = function(Albufeira_Dataframe_List){
   StartTime = Sys.time()
   Iterator = 1
@@ -23,7 +21,7 @@ Create_Albufeiras_AllYears_List = function(Albufeira_Dataframe_List){
     Iterator = Iterator + 1
   }
   EndTime = Sys.time()
-  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, unit = "secs"))
+  TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
   HoursSpent <- floor(TimeinSeconds / 3600)
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent
