@@ -14,7 +14,7 @@ ID_list <- list()
 #' @export
 CropShapefile_ExportToPath = function(ShapefilePath, ShapefileName, ExportPath){
   StartTime = Sys.time()
-  Shapefile = rgdal::readOGR(ShapefilePath, ShapefileName)
+  Shapefile = rgdal::readOGR(dsn = paste0(ShapefilePath, ShapefileName))
   Iterator = 1
   Iterator2 = 1
   ID_list <<- list()

@@ -2,7 +2,7 @@
 % Please edit documentation in R/VectorBuilder.R
 \name{VectorBuilder}
 \alias{VectorBuilder}
-\title{Produces global variables Vector1, 2 and 3}
+\title{Produces global variables VectorNDVI, VectorRGBSum and VectorAlgorithm}
 \usage{
 VectorBuilder(Threshold_NDVI, Threshold_RGMSum)
 }
@@ -15,5 +15,5 @@ VectorBuilder(Threshold_NDVI, Threshold_RGMSum)
 Returns nothing, used to produce Vector1, 2 and 3.
 }
 \description{
-Produces global variables Vector1, 2 and 3
+Produces global variables VectorNDVI, VectorRGBSum and VectorAlgorithm
 }

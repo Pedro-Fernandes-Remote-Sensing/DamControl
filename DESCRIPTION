@@ -20,5 +20,7 @@ Imports:
     sf,
     utils,
     grDevices
-
-
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
