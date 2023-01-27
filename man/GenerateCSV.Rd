@@ -5,7 +5,7 @@
 \title{Generates a csv file that contains several rows of information, namely number of Water Cells and Non Water Cells, prints time spent and names the files acordding to the Threshold provided. Accepts a list of lists where each element is a list of all 12 months for a specific year and specific ZOI;}
 \usage{
 GenerateCSV(
-  Albufeira_List_of_Lists,
+  ZOI_List_of_Lists,
   ExportPath,
   Year,
   ID_list,
@@ -14,7 +14,7 @@ GenerateCSV(
 )
 }
 \arguments{
-\item{Albufeira_List_of_Lists}{A list of lists, where the first element is a list of all 12 months of a product for ZOI 1; Usually a list of lists of Binary_NDVI cut to each ZOI;}
+\item{ZOI_List_of_Lists}{A list of lists, where the first element is a list of all 12 months of a product for ZOI 1; Usually a list of lists of Binary_NDVI cut to each ZOI;}
 
 \item{ExportPath}{a path to export the .csv files;}
 

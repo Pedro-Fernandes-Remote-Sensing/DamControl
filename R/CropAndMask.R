@@ -1,5 +1,5 @@
 #' Cuts and Masks a list of rasters to the zone of a shapefile; Cutting the satellite images to the required zones in the beginning saves a LOT of time; Prints time spent;
-#' Might produced an error: "Error in x$.self$finalize() : attempt to apply non-function" but that's an R problem and it doesnt affect the results;
+#' Might produce an error: "Error in x$.self$finalize() : attempt to apply non-function" but that's an R problem and it doesnt affect the results;
 #'
 #' @param BrickList a list of Bricks, raster objects, to be reduced, as in cut, to the area of a shapefile;
 #' @param ShapefilePath a string representing a path to a shapefile;
@@ -31,6 +31,6 @@ CropAndMask = function(BrickList, ShapefilePath, ShapeName){
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent
   TotalTime = paste0(sapply(c(HoursSpent, MinutesSpent, SecondsSpent), function(x) {formatC(x, width = 2, format = "d", flag = "0")}), collapse = ":")
-  print(paste0(noquote("Total Time spent creating Albufeira_X_Threshold_X_Threshold_X Folders (HH:MM:SS): "), noquote(TotalTime)))
+  print(paste0(noquote("Total Time spent Cropping and Masking rasters (HH:MM:SS): "), noquote(TotalTime)))
   return(CroppedMaskedList)
 }

@@ -2,6 +2,6 @@ pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
-  Introduction_to_WaterDetection_Package: Introduction_to_WaterDetection_Package.html
-last_built: 2023-01-19T11:29Z
+  WaterDetection: WaterDetection.html
+last_built: 2023-01-25T11:17Z
 

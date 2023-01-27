@@ -47,16 +47,16 @@ GenerateExportPaths = function(Year_List, OutputPath){
      # CSV_Individual
      var.name = paste0("ExportPath_CSV_", Year_List[Iterator])
      assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/13_CSV_ZOI_Individual"), envir = envir)
-     # Individual_ZOI_Graphs
-     var.name = paste0("ExportPath_Graphs_Individual_", Year_List[Iterator])
-     assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/ZOI_Individual_Graphs"), envir = envir)
-     # Individual_Graphs_Overlap
-     var.name = paste0("ExportPath_Graphs_Overlap_Individual_", Year_List[Iterator])
-     assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/ZOI_Individual_Graphs_Overlap"), envir = envir)
-     # Individual Shapefiles
-     var.name = paste0("ExportPath_Shapefiles_Individual", Year_List[Iterator])
-     assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/ZOI_Individual_Shapefiles"), envir = envir)
      Iterator = Iterator + 1
    }
+   # Individual_ZOI_Graphs
+   var.name = paste0("ExportPath_Graphs_Individual")
+   assign(var.name, paste0(OutputPath, "/ZOI_Individual_Graphs"), envir = envir)
+   # Individual_Graphs_Overlap
+   var.name = paste0("ExportPath_Graphs_Overlap_Individual")
+   assign(var.name, paste0(OutputPath, "/ZOI_Individual_Graphs_Overlap"), envir = envir)
+   # Individual Shapefiles
+   var.name = paste0("ExportPath_Shapefiles_Individual")
+   assign(var.name, paste0(OutputPath, "/ZOI_Individual_Shapefiles"), envir = envir)
 }
 

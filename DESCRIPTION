@@ -1,6 +1,6 @@
 Package: WaterDetection
 Title: Water Detection for Dam level control (or lakes, bodies of water etc) using pre-processed Sentinel-2 imagery
-Version: 0.0.0.9000
+Version: 0.0.0.9003
 Authors@R: 
     person("Pedro", "Fernandes", , "pedro.pires.fernandes@gmail.com", role = c("aut", "cre"))
 Description: Several functions that take composite Sentinel-2 imagery (with 10 bands) and run an algorythm that detects water in a shapefile based on a combination of RGB and NDVI values. 

@@ -1,0 +1,233 @@
+---
+title: "Introduction to Water Detection"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to Water Detection}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+**This Vignette was produced using RMarkdown documentation, you can find most of the syntax here: https://www.markdownguide.org/cheat-sheet/** <br />
+<br />
+**This package was built using library(devtools) for package building, library(roxygen2) for documentation, and library(pkgdown) for the generation of docs folder**
+<br />
+<br />
+Welcome to the Introduction of the "WaterDetection" package. In this Vignette I will run you through the necessary steps to use this package and produce time-series graphs that represent the amount of water in a group of Zones of Interest (ZOI).
+<br />
+
+
+## Main Setup and Data
+### **1** - Install and load package
+The first step would obviously be to install and load our package, "WaterDetection". Use Packages > Install from file and use the file (.tar.gz probably) provided. Then load the package:
+
+```{r setup}
+library(WaterDetection)
+```
+
+or use this line, that will work as soon as our package is available on RCAN:
+
+```{r, eval=FALSE}
+if (!require('WaterDetection')) install.packages('WaterDetection'); library ('WaterDetection')
+```
+### **2** - Read Composite Input Data
+We will need data, and as such you should define variables (lists) with your satellite imagery data. In this package, we'd like to have a list of file paths. The path used should point to a folder where you can find **pre-processed monthly composites** that correspond to a single year. This should be done **once for each year of data** (you should organize data 1 folder = 12 months of data) you'd like to use. Make sure to include **full.names = TRUE**. The usage of .VRT has not been tested yet, and as such tile-by-tile processing is recommended. For one year, Example:
+
+```{r, eval=FALSE}
+CompositeListYearX = list.files(path = "Whatever_File_Path", pattern = "Whatever_Identifying_Pattern", full.names = TRUE)
+```
+
+Or, for a set of 6 years (2017, 2018, 2019, 2020, 2021, 2022):
+
+```{r, eval=FALSE}
+CompositeListYear2017 = list.files(path = "Whatever_File_Path", pattern = "Whatever_Identifying_Pattern", full.names = TRUE)
+CompositeListYear2018 = list.files(path = "Whatever_File_Path", pattern = "Whatever_Identifying_Pattern", full.names = TRUE)
+CompositeListYear2019 = list.files(path = "Whatever_File_Path", pattern = "Whatever_Identifying_Pattern", full.names = TRUE)
+CompositeListYear2020 = list.files(path = "Whatever_File_Path", pattern = "Whatever_Identifying_Pattern", full.names = TRUE)
+CompositeListYear2021 = list.files(path = "Whatever_File_Path", pattern = "Whatever_Identifying_Pattern", full.names = TRUE)
+CompositeListYear2022 = list.files(path = "Whatever_File_Path", pattern = "Whatever_Identifying_Pattern", full.names = TRUE)
+```
+### **3** - Read NDVI Input Data
+This algorithm also uses the NDVI. If you already have NDVI calculated for each month of your data, you should now define lists that contain the file paths for NDVI. Otherwise you need to calculate it. This should be done **once for each year of data** (you should organize data 1 folder = 12 months of data)  you'd like to use. Make sure to include **full.names = TRUE**. For one year, again:
+
+```{r, eval=FALSE}
+NDVIListYearX = list.files(path = "Whatever_File_Path", pattern = "Whatever_Identifying_Pattern", full.names = TRUE)
+```
+
+Or, for a set of 6 years (2017, 2018, 2019, 2020, 2021, 2022):
+
+```{r, eval=FALSE}
+NDVIListYear2017 = list.files(path = "Whatever_File_Path", pattern = "Whatever_Identifying_Pattern", full.names = TRUE)
+NDVIListYear2018 = list.files(path = "Whatever_File_Path", pattern = "Whatever_Identifying_Pattern", full.names = TRUE)
+NDVIListYear2019 = list.files(path = "Whatever_File_Path", pattern = "Whatever_Identifying_Pattern", full.names = TRUE)
+NDVIListYear2020 = list.files(path = "Whatever_File_Path", pattern = "Whatever_Identifying_Pattern", full.names = TRUE)
+NDVIListYear2021 = list.files(path = "Whatever_File_Path", pattern = "Whatever_Identifying_Pattern", full.names = TRUE)
+NDVIListYear2022 = list.files(path = "Whatever_File_Path", pattern = "Whatever_Identifying_Pattern", full.names = TRUE)
+```
+### **4** and **5** - Define a Shapefile (Path and Name) for our ZOI
+Now it would take ages and it would be counter-productive (and also not very accurate) to apply this algorithm to the entirety of our data. As such, it is recommended that you produce a **shapefile (.shp)** with **ZOI (Zones of Interest)**. These zones should be zones where water is expected to be (say zones defining damns, lakes). These zones can (and probably should) come from the most recent mapping you have (example: COS2018, class 9.1.2.X). Then, define a variable with a path to that shapefile, and another variable with the shapefile name. **These variables should be global, if possible (using <<- instead of <-). However, caution using global variables regarding your overall work.** Example:
+
+```{r, eval=FALSE}
+ZOI_Shapefile_Path <<- "Whatever_Shapefile_Path"
+Shapefile_Name <<- "Whatever_Shapefile_Name" # Example: COS2018_912X_Planos_de_agua_UTM.shp
+```
+### **6** - Define a list of Years with the same years you want to calculate;
+Now we should define a variable with a list of years that we will calculate. This will help other functions work properly. Other solutions might automate this but it will severely complicate the code without any real need. Let's say you're using 6 years of data as per previous example. **This variable should be global, if possible (using <<- instead of <-). However, caution using global variables regarding your overall work.** Then:
+
+```{r, eval=FALSE}
+Year_List <<- list(2017,2018,2019,2020,2021,2022)
+```
+### **7** - Define a general Output path
+Now let's define a path for the general output of our Algorithm. This path will eventually contain all the images for all ZOIs from every step of the process. Let's say:
+
+```{r, eval=FALSE}
+Output_Path <<- "Whatever_Path"
+```
+
+**8** and **9** - This algorithm uses both NDVI and a sum of RGB bands to detect water. We should now define what thresholds it should use to differentiate water from non-water. Define two variables, one for **NDVI_Threshold** and one for **RGBSum_Threshold**. I recommend 0 and 800, respectively. These variables should be a list with just one element. This was a preparation for further automation that wasn't completed (multiple thresholds per run). As such:
+
+```{r, eval=FALSE}
+NDVI_Threshold = list(0)
+RGBSum_Threshold = list(800)
+```
+
+**10** - Although not perfectly automated, there is still a severe amount of automation in this package. We can now automate the creation of output folders in the output path we created in step 7. Using the function **CreateOutputFolders()** with the arguments **Year_List** from step 6 and **OutputPath** from step 7. Keep in mind this function has no return.
+
+```{r, eval=FALSE}
+CreateOutputFoldersALL(Year_List, Output_Path)
+```
+
+**11** - This package uses a lot of different export paths, and thus they need to be defined. This process is automated with the use of **GenerateExportPaths()**. You should have an export path for all these 12 different things (a set for each year):
+<br />
+<ol>
+1. NDVI_All
+2. Composite_All
+3. RGBSum_All
+4. NDVI_Binary_All
+5. RGBSum_Binary_All
+6. Algorithm_All
+7. NDVI_Individual
+8. Composite_Individual
+9. RGBSum_Individual
+10. NDVI_Binary_Individual
+11. Algorithm_Individual
+12. CSV_Export_Path
+<br />
+<br />
+**And three more paths (not repeated by year):**
+<br />
+<br />
+13. Individual_Graphs
+14. Individual_Graphs_Overlap
+15. Individual_Shapefiles
+</ol>
+<br />
+Simply use as argument the year list from step 6 and the output path from step 7:
+```{r, eval=FALSE}
+GenerateExportPaths(Year_List, Output_Path)
+```
+**12** - Now let's use **CropShapefile_ExportToPath()** to cut the Shapefile that contains our ZOI into diferent shapefiles, one for each ZOI. This is useful for later processing and also to build maps in GIS software (since we now have the boundaries of each ZOI). Note that I used **ZOI_Shapefile_Path**, **Shapefile_Name** and **ExportPath_Shapefiles** from steps 4, 5 and 11. This function will return a list of individual shapefile objects (ordered by OBJECT_ID from the atribute table), which we will store in a variable **ZOI_Shapefile_List**.
+```{r, eval=FALSE}
+ZOI_Shapefile_List = CropShapefile_ExportToPath(ZOI_Shapefile_Path, Shapefile_Name, ExportPath_Shapefiles_Individual)
+```
+**13** - Then you should build some vectors that will be used to reclassify rasters later. Use **VectorBuilder()** with the values defined in step 8 and 9. Remenber to define lists in step 8 and 9 and then call the first element of each list using [[1]]:
+```{r, eval=FALSE}
+VectorBuilder(NDVI_Threshold[[1]], RGBSum_Threshold[[1]])
+```
+# Processing Steps by Year
+
+I will now give you a run down of steps to take for each year of data you use. Later, all of the results of these processes will be put together to help us build time-series graphs for each ZOI.
+
+## Processing NDVI
+
+###**14** - Build a list of NDVI Bricks 
+R works best when you turn your raster data into workable "stacks" or "bricks". In this case, we will use **BuildBrickList()** to transform our **NDVIListYearX** into workable "bricks". Simply:
+```{r, eval=FALSE}
+NDVI_YearX_BL = BuildBrickList(NDVIListYearX)
+```
+###**15** - Crop And Mask our NDVI imagery to the ZOI in our Shapefile
+Now we can the function CropAndMask() to, well, Crop and Mask our data to the areas defined by our Shapefile. This will severely reduce processing time, as areas where Water is expected are a relatively low percentage of the total area. Note that I used **NDVI_YearX_BL** from step 14. Example:
+```{r, eval=FALSE}
+NDVI_YearX_ZOI = CropAndMask(NDVI_YearX_BL, Shapefile_Path, Shapefile_Name)
+```
+###**16** - Export the Cropped and Masked NDVI
+We now have NDVI, relating to Year X, exclusively inside the ZOIs. We can use **ExportRasters()** to save those rasters, just in case we need them for some sort of analysis. Please note I used as arguments the NDVI to be exported, the ExportPath for NDVI_All (as produced in step 11), a string for a general file name (month name will be appended in the end so please end the name with _), a string to print as each NDVI is exported and a string to print in the end. These strings are useful if you ever need to debug something. As such:
+
+```{r, eval=FALSE}
+ExportRasterList(NDVI_YearX_ZOI, ExportPath_NDVI_All_YearX, "NDVI_All_YearX_", "Finished Exporting NDVI ", "Finished Exporting all NDVI")
+```
+
+###**17** - Create folders for the NDVI of each Individual ZOI
+We now need to create individual folders for each ZOI. These folders will store the Individual NDVI, organized by ZOI. We can use **CreateIndividualFolders()**, with
+**ExportPath_NDVI_Individual_YearX** (as per step 11) and **ID_list** (global variable produced with step 12 that represents a list of OBJECT_ID, one for each ZOI). That being said:
+```{r, eval=FALSE}
+CreateIndividualFolders(ExportPath_NDVI_Individual_YearX, ID_list)
+```
+###**18** - Cut and Export Individual ZOI NDVI and store those in a matrix in memory
+We can now cut and export the monthly NDVI for each ZOI and store them in a matrix. Matrix[[1]] is a list of monthly NDVI for ZOI 1 and Matrix[[1]][[1]]
+  is the the first month of the agricultural Year X for ZOI 1 (assuming entry data is 12 months and sorted by Agricultural Year). Use **Individual_Product()** with arguments: **NDVI_YearX_ZOI** from step 18, **ZOI_Shapefile_List** from step 12, **ExportPath_NDVI_Individual_YearX** from step 11, ID_list (global variable) from step 12, a name for each file (string "XXX_", as the function will attach the ZOI ID in the end), a string to print as each NDVI is exported, a string to print as each ZOI is completed and a string to print in the end;
+```{r, eval=FALSE}
+NDVI_YearX_IndividualZOI_ListOfLists = IndividualProduct(NDVI_YearX_ZOI, ZOI_Shapefile_List, ExportPath_NDVI_Individual_YearX, ID_list, "NDVI_YearX_ZOI_", "Singular NDVI Exported ", "Completed ZOI ", "Completed All ZOI")
+``` 
+###**19** - Reclassify the NDVI with NDVI_Threshold (not the individual ZOI matrix)
+Although we have the normal NDVI, we will need to reclassify it using our **NDVI_Threshold** from step 8. This, in conjunction with a reclassified RGBSum (to be done later) will produce our Water Detection algorithm. For this matter, you can use **ReclassRasterList()**:
+```{r, eval=FALSE}
+NDVI_YearX_ZOI_Binary = ReclassRasterList(NDVI_YearX_ZOI, VectorNDVI, "Reclassfied NDVI ", "Reclassified all NDVI")
+```
+###**20** - Export the recently reclassified NDVI
+Better to export it just in case we need it later for some other purpose.
+```{r, eval=FALSE}
+ExportRasterList(NDVI_YearX_ZOI_Binary, ExportPath_NDVI_All_YearX, "NDVI_All_YearX_", "Finished Exporting NDVI ", "Finished Exporting all NDVI")
+```
+###**21** - Create folders for the Binary NDVI of each Individual ZOI
+Let's create some more folders for each ZOI, named after the threshold selected in step 8, using **CreateIndividualFolders2()** this time, since it takes as input an additional argument:
+```{r, eval=FALSE}
+CreateIndividualFolders2(ExportPath_NDVI_Binary_Individual_YearX, ID_lis, NDVI_Threshold)
+```
+###**22** - Cut and Export Individual ZOI Binary NDVI and store those in a matrix in memory
+We can now cut and export the monthly Binary_NDVI for each ZOI and store them in a matrix. Matrix[[1]] is a list of monthly Binary NDVI for ZOI 1 and Matrix[[1]][[1]] is the the first month of the agricultural Year X for ZOI 1 (assuming entry data is 12 months and sorted by Agricultural Year). Use **Individual_Product2()** with arguments: **NDVI_YearX_ZOI_Binary** from step 18, **ZOI_Shapefile_List** from step 12, **ExportPath_NDVI_Binary_Individual_YearX** from step 11, ID_list (global variable) from step 12, a name for each file (string "XXX_", as the function will attach the ZOI ID in the end), a string to print as each Bianry NDVI is exported, a string to print as each ZOI is completed and a string to print in the end;
+```{r, eval=FALSE}
+NDVI_Binary_YearX_IndividualZOI_ListofLists = IndividualProduct2(NDVI_YearX_ZOI, ZOI_Shapefile_List, ExportPath_NDVI_Individual_YearX, NDVI_Threshold[[1]], ID_list, "NDVI_YearX_ZOI_", "Singular NDVI Exported ", "Completed ZOI ", "Completed All ZOI"))
+``` 
+## Processing RGBSum 
+###**23** - Build Composite Bricks
+This is a similar process to NDVI. First let's start by building Bricks from our data using **BuildBrickList()** and **CompositeListYearX** from step 2:
+```{r, eval=FALSE}
+Composite_YearX_BL = BuildBrickList(CompositeListYearX)
+```
+###**24** - Crop And Mask our Composite imagery to the ZOI in our Shapefile
+Let's now Crop and Mask our data to our original Shapefile using **CropAndMask()**, **ZOI_Shapefile_Path** and **Shapefile_Name** from step 2:
+```{r, eval=FALSE}
+Composite_YearX_ZOI = CropAndMask(Composite_YearX_BL, Shapefile_Path, Shapefile_Name)
+```
+###**25** - Export the Cropped and Masked Composites
+Export the result of CropAndMask, using **ExportPath()** and **ExportPath_Composite_All_YearX**, just in case we need later. Remeber to add a name for the file (XXX_, as the function will attach month name to the end, assuming data is 12 month and sorted by agricultural year), a string to print after each month is exported and a string to print in the end:
+```{r, eval=FALSE}
+ExportRasterList(Composite_YearX_ZOI, ExportPath_Composite_All_YearX, "Composite_All_YearX_", "Finished Exporting Composite ", "Finished Exporting all Composites")
+```
+###**26** - Create folders for the Composite of each Individual ZOI
+Let's make sure we have individual folders for the Individual Composites by running **CreateIndividualFolders()** using **ExportPath_Composite_Individual_YearX** and **ID_list**: 
+```{r, eval=FALSE}
+CreateIndividualFolders(ExportPath_Composite_Individual_YearX, ID_list)
+```
+###**27** - Cut and Export Individual ZOI Composites and store those in a matrix in memory
+Now let's again cut and export the monthly Composites for each ZOI and store them in a matrix where Matrix[[1]] is a list of monthly Composite for ZOI 1 and Matrix[[1]][[1]] is the the first month of the agricultural Year X for ZOI 1 (assuming entry data is 12 months and sorted by Agricultural Year) using as arguments: **Composite_YearX_ZOI** from step 24, **ZOI_Shapefile_List** from step 15, **ExportPath_Composite_Individual_YearX** from step 11, **ID_list** (global variable that should be created from running step 12), a string name for the files (XXX_, as the function will attach ZOI ID and month to the end), a string to print as each composite is exported, a string to print as each ZOI is finished and a string to print in the end;
+```{r, eval=FALSE}
+Composite_YearX_IndividualZOI_ListOfLists = IndividualProduct(Composite_YearX_ZOI, ZOI_Shapefile_List, ExportPath_Composite_Individual_YearX, ID_list, "Composite_YearX_ZOI_", "Singular Composite Exported ", "Completed ZOI ", "Completed All ZOI")
+```
+###**28** - Calculate a sum of the RGB bands on our Composites (not the individual matrix)
+But composites aren't useful without any processing, so we need to calculate a sum of the RGB bands. Just use **CalculateRGBSum()** with our **Composite_YearX_ZOI**:
+```{r, eval=FALSE}
+RGBSum_YearX_ZOI = CalculateRGBSum(Composite_YearX_ZOI)
+```
+###**29** - Export the recently calculated sum of RGB bands
+Export the result, just in case we need it later, using **ExportRasterList()** with ExportPath_RGBSum_All_:
+```{r, eval=FALSE}
+ExportRasterList(RGBSum_YearX_ZOI, ExportPath_RGBSum_All_YearX, "RGBSum_All_YearX_", "Finished Exporting Composite ", "Finished Exporting all Composites")
+```

@@ -8,7 +8,7 @@
 CreateIndividualFolders = function(FolderDestinationPath, ID_list){
   StartTime = Sys.time()
   for (ID in ID_list){
-    dir.create(paste0(FolderDestinationPath, "/Albufeira_", ID))
+    dir.create(paste0(FolderDestinationPath, "/ZOI_", ID))
   }
   EndTime = Sys.time()
   TimeinSeconds <- as.numeric(difftime(EndTime, StartTime, units = "secs"))
@@ -16,7 +16,7 @@ CreateIndividualFolders = function(FolderDestinationPath, ID_list){
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent
   TotalTime = paste0(sapply(c(HoursSpent, MinutesSpent, SecondsSpent), function(x) {formatC(x, width = 2, format = "d", flag = "0")}), collapse = ":")
-  print(paste0(noquote("Total Time spent creating Albufeira_X Folders (HH:MM:SS): "), noquote(TotalTime)))
+  print(paste0(noquote("Total Time spent creating ZOI_X Folders (HH:MM:SS): "), noquote(TotalTime)))
 }
 
 #' Creates folders for each individual ZOI, with threshold imbued in the folder name;
@@ -31,7 +31,7 @@ CreateIndividualFolders2 = function(FolderDestinationPath, ID_list, Threshold_Li
   StartTime = Sys.time()
   for (Threshold in Threshold_List){
     for (ID in ID_list){
-      dir.create(paste0(FolderDestinationPath, "/Albufeira_", ID, "_Threshold_", Threshold))
+      dir.create(paste0(FolderDestinationPath, "/ZOI_", ID, "_Threshold_", Threshold))
     }
   }
   EndTime = Sys.time()
@@ -40,7 +40,7 @@ CreateIndividualFolders2 = function(FolderDestinationPath, ID_list, Threshold_Li
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent
   TotalTime = paste0(sapply(c(HoursSpent, MinutesSpent, SecondsSpent), function(x) {formatC(x, width = 2, format = "d", flag = "0")}), collapse = ":")
-  print(paste0(noquote("Total Time spent creating Albufeira_X_Threshold_X Folders (HH:MM:SS): "), noquote(TotalTime)))
+  print(paste0(noquote("Total Time spent creating ZOI_X_Threshold_X Folders (HH:MM:SS): "), noquote(TotalTime)))
 }
 
 #' Creates folders for each individual ZOI, with both thresholds imbued in the folder name;
@@ -57,7 +57,7 @@ CreateIndividualFolders3 = function(FolderDestinationPath, ID_list, Threshold_Li
   for (Threshold2 in Threshold_List_2){
     for (Threshold in Threshold_List){
       for (ID in ID_list){
-        dir.create(paste0(FolderDestinationPath, "/Albufeira_", ID, "_Threshold_", Threshold, "_Threshold_", Threshold2))
+        dir.create(paste0(FolderDestinationPath, "/ZOI_", ID, "_Threshold_", Threshold, "_Threshold_", Threshold2))
       }
     }
   }
@@ -67,5 +67,5 @@ CreateIndividualFolders3 = function(FolderDestinationPath, ID_list, Threshold_Li
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent
   TotalTime = paste0(sapply(c(HoursSpent, MinutesSpent, SecondsSpent), function(x) {formatC(x, width = 2, format = "d", flag = "0")}), collapse = ":")
-  print(paste0(noquote("Total Time spent creating Albufeira_X_Threshold_X_Threshold_X Folders (HH:MM:SS): "), noquote(TotalTime)))
+  print(paste0(noquote("Total Time spent creating ZOI_X_Threshold_X_Threshold_X Folders (HH:MM:SS): "), noquote(TotalTime)))
 }

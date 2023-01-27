@@ -5,7 +5,7 @@
 #'
 #' @return returns a list of Dataframe lists, where the first element is a list representing all the dataframes for all the years of the first ZOI;
 #' @export
-Create_Albufeiras_AllYears_List = function(Albufeira_Dataframe_List){
+Create_ZOI_AllYears_List = function(Albufeira_Dataframe_List){
   StartTime = Sys.time()
   Iterator = 1
   Iterator2 = 1
@@ -26,6 +26,6 @@ Create_Albufeiras_AllYears_List = function(Albufeira_Dataframe_List){
   MinutesSpent <- floor((TimeinSeconds - 3600 * HoursSpent) / 60)
   SecondsSpent <- TimeinSeconds - 3600*HoursSpent - 60*MinutesSpent
   TotalTime = paste0(sapply(c(HoursSpent, MinutesSpent, SecondsSpent), function(x) {formatC(x, width = 2, format = "d", flag = "0")}), collapse = ":")
-  print(paste0(noquote("Total Time spent creating Albufeiras_AllYears_List (HH:MM:SS): "), noquote(TotalTime)))
+  print(paste0(noquote("Total Time spent creating ZOI_AllYears_List (HH:MM:SS): "), noquote(TotalTime)))
   return(List2)
 }
