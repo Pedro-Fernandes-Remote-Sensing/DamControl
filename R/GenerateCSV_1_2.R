@@ -3,7 +3,7 @@
 #' @param ZOI_List_of_Lists A list of lists, where the first element is a list of all 12 months of a product for ZOI 1; Usually a list of lists of Binary_NDVI cut to each ZOI;
 #' @param ExportPath a path to export the .csv files;
 #' @param Year a string to represent the agricultural year, ex: 2017 or Ano Agricola 2017
-#' @param ID_list a list of IDs representing the amount of unique shapes inside the original shapefile, usually created asa global variable using CropShapefile_ExportToPath;
+#' @param ID_list a list of IDs representing the amount of unique shapes inside the original shapefile, usually created as a global variable using CropShapefile_ExportToPath;
 #' @param ProductName a Product Name to be printed in the files name, ex: BinaryNDVI or Combo;
 #' @param Threshold1 a number representing the threshold used in the files that originate the csv, like 0 for NDVI;
 #'

@@ -20,7 +20,7 @@ GenerateCSV(
 
 \item{Year}{a string to represent the agricultural year, ex: 2017 or Ano Agricola 2017}
 
-\item{ID_list}{a list of IDs representing the amount of unique shapes inside the original shapefile, usually created asa global variable using CropShapefile_ExportToPath;}
+\item{ID_list}{a list of IDs representing the amount of unique shapes inside the original shapefile, usually created as a global variable using CropShapefile_ExportToPath;}
 
 \item{ProductName}{a Product Name to be printed in the files name, ex: BinaryNDVI or Combo;}
 

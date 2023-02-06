@@ -1,27 +1,38 @@
 #' Creates some of the folders required to organize outputs in the a certain provided path and prints time spent;
 #'
-#' @param Year_List a list of integers representing the years to be calculated. Folders will be created based; If Windows based, MAXIMUM CHARACTER SIZE IS 118. Or go to the registry and change the maximum number of characters on a file path;
-#' @param OUTPUT_Path a string representing a path where you'd like the folders to be created;
+#' @param Year_List a list of integers representing the years to be calculated.
+#' @param OUTPUT_Path a string representing a path where you'd like the folders to be created: If Windows based, MAXIMUM CHARACTER SIZE IS 118. Or go to the registry and change the maximum number of characters on a file path;
 #'
 #' @return has no returns. Meant to be used just to create folders;
 #' @export
 CreateOutputFoldersALL = function(Year_List, OUTPUT_Path){
   for (Year in Year_List){
     StartTime = Sys.time()
-    dir.create(paste0(OUTPUT_Path, "/AA_", Year))
-    dir.create(paste0(OUTPUT_Path, "/AA_", Year, "/1_NDVI_ZOI_All"))
-    dir.create(paste0(OUTPUT_Path, "/AA_", Year, "/2_Composite_ZOI_All"))
-    dir.create(paste0(OUTPUT_Path, "/AA_", Year, "/3_RGB_Sum_ZOI_All"))
-    dir.create(paste0(OUTPUT_Path, "/AA_", Year, "/4_NDVI_Binary_ZOI_All"))
-    dir.create(paste0(OUTPUT_Path, "/AA_", Year, "/5_RGB_Sum_Binary_ZOI_All"))
-    dir.create(paste0(OUTPUT_Path, "/AA_", Year, "/6_Algorithm_Binary_ZOI_All"))
-    dir.create(paste0(OUTPUT_Path, "/AA_", Year, "/7_NDVI_ZOI_Individual"))
-    dir.create(paste0(OUTPUT_Path, "/AA_", Year, "/8_Composite_ZOI_Individual"))
-    dir.create(paste0(OUTPUT_Path, "/AA_", Year, "/9_RGB_Sum_ZOI_Individual"))
-    dir.create(paste0(OUTPUT_Path, "/AA_", Year, "/10_NDVI_Binary_ZOI_Individual"))
-    dir.create(paste0(OUTPUT_Path, "/AA_", Year, "/11_RGB_Sum_Binary_ZOI_Individual"))
-    dir.create(paste0(OUTPUT_Path, "/AA_", Year, "/12_Algorithm_Binary_ZOI_Individual"))
-    dir.create(paste0(OUTPUT_Path, "/AA_", Year, "/13_CSV_ZOI_Individual"))
+    #Create Agricultural Year Folders
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year))
+    #Create NDVI folders
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/NDVIs"))
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/NDVIs", "/NDVI_ZOI_All"))
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/NDVIs", "/NDVI_Binary_ZOI_All"))
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/NDVIs", "/NDVI_ZOI_Individual"))
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/NDVIs", "/NDVI_Binary_ZOI_Individual"))
+    #Create Composites Folders
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/Composites"))
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/Composites", "/Composite_ZOI_Individual"))
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/Composites", "/Composite_ZOI_All"))
+    #Create RGBSum Folders
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/RGBSums"))
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/RGBSums", "/RGB_Sum_ZOI_All"))
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/RGBSums", "/RGB_Sum_Binary_ZOI_All"))
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/RGBSums", "/RGB_Sum_ZOI_Individual"))
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/RGBSums", "/RGB_Sum_Binary_ZOI_Individual"))
+    #Create Algorithm Folders
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/Algorithm"))
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/Algorithm", "/Algorithm_Binary_ZOI_All"))
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/Algorithm", "/Algorithm_Binary_ZOI_Individual"))
+    #Create CSVs Folders
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/CSVs"))
+    dir.create(paste0(OUTPUT_Path, "/Agricultural_Year_", Year, "/CSVs", "/CSV_ZOI_Individual"))
   }
   dir.create(paste0(OUTPUT_Path, "/ZOI_Individual_Graphs"))
   dir.create(paste0(OUTPUT_Path, "/ZOI_Individual_Graphs_Overlap"))

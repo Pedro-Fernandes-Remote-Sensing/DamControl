@@ -7,9 +7,9 @@
 CreateOutputFoldersALL(Year_List, OUTPUT_Path)
 }
 \arguments{
-\item{Year_List}{a list of integers representing the years to be calculated. Folders will be created based; If Windows based, MAXIMUM CHARACTER SIZE IS 118. Or go to the registry and change the maximum number of characters on a file path;}
+\item{Year_List}{a list of integers representing the years to be calculated.}
 
-\item{OUTPUT_Path}{a string representing a path where you'd like the folders to be created;}
+\item{OUTPUT_Path}{a string representing a path where you'd like the folders to be created: If Windows based, MAXIMUM CHARACTER SIZE IS 118. Or go to the registry and change the maximum number of characters on a file path;}
 }
 \value{
 has no returns. Meant to be used just to create folders;

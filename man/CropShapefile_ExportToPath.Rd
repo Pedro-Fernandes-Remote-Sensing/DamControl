@@ -2,7 +2,7 @@
 % Please edit documentation in R/CropShapefile_ExportToPath.R
 \name{CropShapefile_ExportToPath}
 \alias{CropShapefile_ExportToPath}
-\title{Crops a shapefile into all its individual pieces, by OBJECTID, and exports all the individual shapefiles into ExportPath, and prints time spent; Also produces a global variable called ID_List representing a list of IDs taken from the original shapefile;}
+\title{Crops a shapefile into all its individual pieces, by UniqueID, exports all the individual shapefiles into ExportPat plus a new Shapefile with all ZOI and a new column called UniqueID, and prints time spent; Also produces a global variable called ID_List representing a list of IDs taken from the original shapefile;}
 \usage{
 CropShapefile_ExportToPath(ShapefilePath, ShapefileName, ExportPath)
 }
@@ -14,8 +14,8 @@ CropShapefile_ExportToPath(ShapefilePath, ShapefileName, ExportPath)
 \item{ExportPath}{a string representing the path to which the individual shapefiles are to be exported;}
 }
 \value{
-a list of individual shapefiles, ordered by OBJECTID;
+a list of individual shapefiles, ordered by UniqueID;
 }
 \description{
-Crops a shapefile into all its individual pieces, by OBJECTID, and exports all the individual shapefiles into ExportPath, and prints time spent; Also produces a global variable called ID_List representing a list of IDs taken from the original shapefile;
+Crops a shapefile into all its individual pieces, by UniqueID, exports all the individual shapefiles into ExportPat plus a new Shapefile with all ZOI and a new column called UniqueID, and prints time spent; Also produces a global variable called ID_List representing a list of IDs taken from the original shapefile;
 }

@@ -11,42 +11,45 @@ GenerateExportPaths = function(Year_List, OutputPath){
    pos = 1
    envir = as.environment(pos)
    for (Year in Year_List) {
-     # NDVI_ALL
+     # 1 - NDVI_ALL
      var.name = paste0("ExportPath_NDVI_All_", Year_List[Iterator])
-     assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/1_NDVI_ZOI_All"), envir = envir)
-     # Composite_ALL
+     assign(var.name, paste0(OutputPath, "/Agricultural_Year_", Year_List[Iterator], "/NDVIs", "/NDVI_ZOI_All"), envir = envir)
+     # 2 - Composite_ALL
      var.name = paste0("ExportPath_Composite_All_", Year_List[Iterator])
-     assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/2_Composite_ZOI_All"), envir = envir)
-     # RGBSum_ALL
+     assign(var.name, paste0(OutputPath, "/Agricultural_Year_", Year_List[Iterator], "/Composites", "/Composite_ZOI_All"), envir = envir)
+     # 3 - RGBSum_ALL
      var.name = paste0("ExportPath_RGBSum_All_", Year_List[Iterator])
-     assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/3_RGB_Sum_ZOI_All"), envir = envir)
-     # NDVI_Binary_ALL
+     assign(var.name, paste0(OutputPath, "/Agricultural_Year_", Year_List[Iterator], "/RGBSums", "/RGB_Sum_ZOI_All"), envir = envir)
+     # 4 - NDVI_Binary_ALL
      var.name = paste0("ExportPath_NDVI_Binary_All_", Year_List[Iterator])
-     assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/4_NDVI_Binary_ZOI_All"), envir = envir)
-     # RGBSum_Binary_ALL
+     assign(var.name, paste0(OutputPath, "/Agricultural_Year_", Year_List[Iterator], "/NDVIs", "/NDVI_Binary_ZOI_All"), envir = envir)
+     # 5 - RGBSum_Binary_ALL
      var.name = paste0("ExportPath_RGBSum_Binary_All_", Year_List[Iterator])
-     assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/5_RGB_Sum_Binary_ZOI_All"), envir = envir)
-     # Algorithm_ALL
+     assign(var.name, paste0(OutputPath, "/Agricultural_Year_", Year_List[Iterator], "/RGBSums", "/RGB_Sum_Binary_ZOI_All"), envir = envir)
+     # 6 - Algorithm_ALL
      var.name = paste0("ExportPath_Algorithm_All_", Year_List[Iterator])
-     assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/7_NDVI_ZOI_Individual"), envir = envir)
-     # NDVI_Individual
+     assign(var.name, paste0(OutputPath, "/Agricultural_Year_", Year_List[Iterator], "/Algorithm", "/Algorithm_Binary_ZOI_All"), envir = envir)
+     # 7 - NDVI_Individual
      var.name = paste0("ExportPath_NDVI_Individual_", Year_List[Iterator])
-     assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/8_Composite_ZOI_Individual"), envir = envir)
-     # Composite_Individual
+     assign(var.name, paste0(OutputPath, "/Agricultural_Year_", Year_List[Iterator], "/NDVIs", "/NDVI_ZOI_Individual"), envir = envir)
+     # 8 - Composite_Individual
      var.name = paste0("ExportPath_Composite_Individual_", Year_List[Iterator])
-     assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/9_RGB_Sum_ZOI_Individual"), envir = envir)
-     # NDVI_Binary_Individual
+     assign(var.name, paste0(OutputPath, "/Agricultural_Year_", Year_List[Iterator], "/Composites", "/Composite_ZOI_Individual"), envir = envir)
+     # 9 - RGBSum_Individual
+     var.name = paste0("ExportPath_RGBSum_Individual_", Year_List[Iterator])
+     assign(var.name, paste0(OutputPath, "/Agricultural_Year_", Year_List[Iterator], "/RGBSums", "/RGB_Sum_ZOI_Individual"), envir = envir)
+     # 10 - NDVI_Binary_Individual
      var.name = paste0("ExportPath_NDVI_Binary_Individual_", Year_List[Iterator])
-     assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/10_NDVI_Binary_ZOI_Individual"), envir = envir)
-     # RGBSum_Binary_Individual
+     assign(var.name, paste0(OutputPath, "/Agricultural_Year_", Year_List[Iterator], "/NDVIs", "/NDVI_Binary_ZOI_Individual"), envir = envir)
+     # 11 - RGBSum_Binary_Individual
      var.name = paste0("ExportPath_RGBSum_Binary_Individual_", Year_List[Iterator])
-     assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/11_RGB_Sum_Binary_ZOI_Individual"), envir = envir)
-     # Algorithm_Individual
+     assign(var.name, paste0(OutputPath, "/Agricultural_Year_", Year_List[Iterator], "/RGBSums", "/RGB_Sum_Binary_ZOI_Individual"), envir = envir)
+     # 12 - Algorithm_Individual
      var.name = paste0("ExportPath_Algorithm_Individual_", Year_List[Iterator])
-     assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/12_Algorithm_Binary_ZOI_Individual"), envir = envir)
-     # CSV_Individual
+     assign(var.name, paste0(OutputPath, "/Agricultural_Year_", Year_List[Iterator], "/Algorithm", "/Algorithm_Binary_ZOI_Individual"), envir = envir)
+     # 13 - CSV_Individual
      var.name = paste0("ExportPath_CSV_", Year_List[Iterator])
-     assign(var.name, paste0(OutputPath, "/AA_", Year_List[Iterator], "/13_CSV_ZOI_Individual"), envir = envir)
+     assign(var.name, paste0(OutputPath, "/Agricultural_Year_", Year_List[Iterator], "/CSVs", "/CSV_ZOI_Individual"), envir = envir)
      Iterator = Iterator + 1
    }
    # Individual_ZOI_Graphs

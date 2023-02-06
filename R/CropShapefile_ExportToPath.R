@@ -1,11 +1,11 @@
 if(getRversion() >= "2.15.1")  utils::globalVariables(c("ID_list"))
-#' Crops a shapefile into all its individual pieces, by OBJECTID, and exports all the individual shapefiles into ExportPath, and prints time spent; Also produces a global variable called ID_List representing a list of IDs taken from the original shapefile;
+#' Crops a shapefile into all its individual pieces, by UniqueID, exports all the individual shapefiles into ExportPat plus a new Shapefile with all ZOI and a new column called UniqueID, and prints time spent; Also produces a global variable called ID_List representing a list of IDs taken from the original shapefile;
 #'
 #' @param ShapefilePath a string representing a path to the shapefile to be cut;
 #' @param ShapefileName the name of the shapefile file;
 #' @param ExportPath a string representing the path to which the individual shapefiles are to be exported;
 #'
-#' @return a list of individual shapefiles, ordered by OBJECTID;
+#' @return a list of individual shapefiles, ordered by UniqueID;
 #' @importFrom rgdal readOGR
 #' @importFrom rgdal writeOGR
 #' @importFrom raster crop
@@ -14,15 +14,17 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("ID_list"))
 CropShapefile_ExportToPath = function(ShapefilePath, ShapefileName, ExportPath){
   StartTime = Sys.time()
   Shapefile = rgdal::readOGR(dsn = paste0(ShapefilePath, ShapefileName))
+  Shapefile$UniqueID<-1:nrow(Shapefile)
+  rgdal::writeOGR(Shapefile, ExportPath, paste0(ShapefileName, "_UniqueID"), driver = "ESRI Shapefile")
   Iterator = 1
   Iterator2 = 1
   ID_list <<- list()
   ZOIsShapefile_List = list()
-  for (ObjectID in Shapefile$OBJECTID){
-    ZOI_Individual <- Shapefile[Shapefile$OBJECTID == ObjectID,]
+  for (UniqueID in Shapefile$UniqueID){
+    ZOI_Individual <- Shapefile[Shapefile$UniqueID == UniqueID,]
     ZOI_Cropped = raster::crop(Shapefile, raster::extent(ZOI_Individual))
-    rgdal::writeOGR(ZOI_Cropped, ExportPath, paste0("/ZOI_", ObjectID), driver = "ESRI Shapefile")
-    ID = as.integer(ObjectID)
+    rgdal::writeOGR(ZOI_Cropped, ExportPath, paste0("/ZOI_", UniqueID), driver = "ESRI Shapefile")
+    ID = as.integer(UniqueID)
     ID_list[[Iterator]] <<- ID
     print(noquote(paste0("Cropped and Exported ZOI "), ID))
     Iterator = Iterator + 1
