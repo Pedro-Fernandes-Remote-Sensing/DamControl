@@ -7,7 +7,12 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("VectorNDVI", "VectorRGB
 #' @return Returns nothing, used to produce Vector1, 2 and 3.
 #' @export
 VectorBuilder = function(Threshold_NDVI, Threshold_RGMSum){
-  VectorNDVI <<- c(-Inf, Threshold_NDVI, 1, Threshold_NDVI, Inf, 0)
-  VectorRGBSum <<- c(-Inf, Threshold_RGMSum, 1, Threshold_RGMSum, Inf, 0)
-  VectorAlgorithm <<- c(-Inf, 0, 0, 1, 1, 1, 1.9, Inf, 1)
+  pos = 1
+  envir = as.environment(pos)
+  var.name = "VectorNDVI"
+  assign(var.name, c(-Inf, Threshold_NDVI, 1, Threshold_NDVI, Inf, 0), envir = envir)
+  var.name = "VectorRGBSum"
+  assign(var.name, c(-Inf, Threshold_RGMSum, 1, Threshold_RGMSum, Inf, 0), envir = envir)
+  var.name = "VectorAlgorithm"
+  assign(var.name, c(-Inf, 0, 0, 1, 1, 1, 1.9, Inf, 1), envir = envir)
 }

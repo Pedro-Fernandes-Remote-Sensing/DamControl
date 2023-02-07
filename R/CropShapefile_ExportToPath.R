@@ -17,19 +17,18 @@ CropShapefile_ExportToPath = function(ShapefilePath, ShapefileName, ExportPath){
   Shapefile$UniqueID<-1:nrow(Shapefile)
   rgdal::writeOGR(Shapefile, ExportPath, paste0(ShapefileName, "_UniqueID"), driver = "ESRI Shapefile")
   Iterator = 1
-  Iterator2 = 1
-  ID_list <<- list()
+  pos = 1
+  envir = as.environment(pos)
+  var.name = "ID_list"
+  assign(var.name, 1:nrow(Shapefile), envir = envir)
   ZOIsShapefile_List = list()
   for (UniqueID in Shapefile$UniqueID){
     ZOI_Individual <- Shapefile[Shapefile$UniqueID == UniqueID,]
     ZOI_Cropped = raster::crop(Shapefile, raster::extent(ZOI_Individual))
     rgdal::writeOGR(ZOI_Cropped, ExportPath, paste0("/ZOI_", UniqueID), driver = "ESRI Shapefile")
-    ID = as.integer(UniqueID)
-    ID_list[[Iterator]] <<- ID
-    print(noquote(paste0("Cropped and Exported ZOI "), ID))
+    print(noquote(paste0("Cropped and Exported ZOI "), as.integer(UniqueID)))
+    ZOIsShapefile_List[[Iterator]] = ZOI_Cropped
     Iterator = Iterator + 1
-    ZOIsShapefile_List[[Iterator2]] = ZOI_Cropped
-    Iterator2 = Iterator2 + 1
   }
   print(noquote(paste0("Cropped and Exported ZOIs to ", ExportPath)))
   EndTime = Sys.time()

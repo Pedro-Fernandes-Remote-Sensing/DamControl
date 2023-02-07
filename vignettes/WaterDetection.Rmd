@@ -95,8 +95,8 @@ Output_Path <<- "Whatever_Path" #MAXIMUM CHARACTER SIZE 118
 This algorithm uses both NDVI and a sum of RGB bands to detect water. We should now define what thresholds it should use to differentiate water from non-water. Define two variables, one for **NDVI_Threshold** and one for **RGBSum_Threshold**. I recommend 0 and 800, respectively. These variables should be a list with just one element. This was a preparation for further automation that wasn't completed (multiple thresholds per run). As such:
 
 ```{r, eval=FALSE}
-NDVI_Threshold = list(0)
-RGBSum_Threshold = list(800)
+NDVI_Threshold <<- list(0)
+RGBSum_Threshold <<- list(800)
 ```
 
 ### **10** - Create Basic Output Folders
@@ -180,7 +180,7 @@ CreateIndividualFolders(ExportPath_NDVI_Individual_YearX, ID_list)
 We can now cut and export the monthly NDVI for each ZOI and store them in a matrix. Matrix[[1]] is a list of monthly NDVI for ZOI 1 and Matrix[[1]][[1]]
   is the the first month of the agricultural Year X for ZOI 1 (assuming entry data is 12 months and sorted by Agricultural Year). Use **Individual_Product()** with arguments: **NDVI_YearX_ZOI** from step 18, **ZOI_Shapefile_List** from step 12, **ExportPath_NDVI_Individual_YearX** from step 11, ID_list (global variable) from step 12, a name for each file (string "XXX_", as the function will attach the ZOI ID in the end), a string to print as each NDVI is exported, a string to print as each ZOI is completed and a string to print in the end;
 ```{r, eval=FALSE}
-NDVI_YearX_IndividualZOI_ListOfLists = IndividualProduct(NDVI_YearX_ZOI, ZOI_Shapefile_List, ExportPath_NDVI_Individual_YearX, ID_list, "NDVI_YearX_ZOI_", "Singular NDVI Exported ", "Completed ZOI ", "Completed All ZOI")
+NDVI_YearX_IndividualZOI_ListOfLists = IndividualZOIProduct(NDVI_YearX_ZOI, ZOI_Shapefile_List, ExportPath_NDVI_Individual_YearX, ID_list, "NDVI_YearX_ZOI_", "Singular NDVI Exported ", "Completed ZOI ", "Completed All ZOI")
 ``` 
 ### **19** - Reclassify the NDVI with NDVI_Threshold (not the individual ZOI matrix)
 Although we have the normal NDVI, we will need to reclassify it using our **NDVI_Threshold** from step 8. This, in conjunction with a reclassified RGBSum (to be done later) will produce our Water Detection algorithm. For this matter, you can use **ReclassRasterList()**:
@@ -226,7 +226,7 @@ CreateIndividualFolders(ExportPath_Composite_Individual_YearX, ID_list)
 ### **27** - Cut and Export Individual ZOI Composites and store those in a matrix in memory
 Now let's again cut and export the monthly Composites for each ZOI and store them in a matrix where Matrix[[1]] is a list of monthly Composite for ZOI 1 and Matrix[[1]][[1]] is the the first month of the agricultural Year X for ZOI 1 (assuming entry data is 12 months and sorted by Agricultural Year) using as arguments: **Composite_YearX_ZOI** from step 24, **ZOI_Shapefile_List** from step 15, **ExportPath_Composite_Individual_YearX** from step 11, **ID_list** (global variable that should be created from running step 12), a string name for the files (XXX_, as the function will attach ZOI ID and month to the end), a string to print as each composite is exported, a string to print as each ZOI is finished and a string to print in the end;
 ```{r, eval=FALSE}
-Composite_YearX_IndividualZOI_ListOfLists = IndividualProduct(Composite_YearX_ZOI, ZOI_Shapefile_List, ExportPath_Composite_Individual_YearX, ID_list, "Composite_YearX_ZOI_", "Singular Composite Exported ", "Completed ZOI ", "Completed All ZOI")
+Composite_YearX_IndividualZOI_ListOfLists = IndividualZOIProduct(Composite_YearX_ZOI, ZOI_Shapefile_List, ExportPath_Composite_Individual_YearX, ID_list, "Composite_YearX_ZOI_", "Singular Composite Exported ", "Completed ZOI ", "Completed All ZOI")
 ```
 ### **28** - Calculate a sum of the RGB bands on our Composites (not the individual matrix)
 But composites aren't useful without any processing, so we need to calculate a sum of the RGB bands. Just use **CalculateRGBSum()** with our **Composite_YearX_ZOI**:
@@ -246,7 +246,7 @@ CreateIndividualFolders(ExportPath_RGBSum_Individual_YearX, ID_list)
 ### **31** - Cut and Export Individual ZOI RGBSum and store those in a matrix in memory
 Once more, cut and export the monthly RGBSum for each ZOI and store them in a matrix where Matrix[[1]] is a list of monthly RGBSum for ZOI 1 and Matrix[[1]][[1]] is the the first month of the agricultural Year X for ZOI 1 (assuming entry data is 12 months and sorted by Agricultural Year) using as arguments: **RGBSum_YearX_ZOI** from step 28, **ZOI_Shapefile_List** from step 15, **ExportPath_RGBSum_Individual_YearX** from step 11, **ID_list** (global variable that should be created from running step 12), a string name for the files (XXX_, as the function will attach ZOI ID and month to the end), a string to print as each composite is exported, a string to print as each ZOI is finished and a string to print in the end;
 ```{r, eval=FALSE}
-RGBSum_YearX_IndividualZOI_ListOfLists = IndividualProduct(RGBSum_YearX_ZOI, ZOI_Shapefile_List, ExportPath_RGBSum_Individual_YearX, ID_list, "RGBSum_YearX_ZOI_", "Singular RGBSum Exported ", "Completed RGBSum ", "Completed All RGBSum")
+RGBSum_YearX_IndividualZOI_ListOfLists = IndividualZOIProduct(RGBSum_YearX_ZOI, ZOI_Shapefile_List, ExportPath_RGBSum_Individual_YearX, ID_list, "RGBSum_YearX_ZOI_", "Singular RGBSum Exported ", "Completed RGBSum ", "Completed All RGBSum")
 ```
 ### **32** - Reclassify our RGBSums
 Although we have the normal sum of the RGB bands, we will need to reclassify it using our **VectorRGBSum** from step 13. For this matter, you can use **ReclassRasterList()**:
@@ -256,7 +256,7 @@ RGBSum_YearX_ZOI_Binary = ReclassRasterList(RGBSum_YearX_ZOI, VectorRGBSum, "Rec
 ### **33** - Export our recently reclassified RGBSums
 Naturally, we can use **ExportRasterList()**:
 ```{r, eval=FALSE}
-ExportRasterList(RGBSum_YearX_ZOI_Binary, ExportPath_RGBSum_Binary_All_, "RGBSum_Binary_All_YearX_", "Finished Exporting Binary RGBSum ", "Finished Exporting all Binary RGBSum")
+ExportRasterList(RGBSum_YearX_ZOI_Binary, ExportPath_RGBSum_Binary_All_YearX, "RGBSum_Binary_All_YearX_", "Finished Exporting Binary RGBSum ", "Finished Exporting all Binary RGBSum")
 ```
 ### **34** - Create Individual Folders for Binary RGBSum
 We will of course also need folders for each binary RGBSum (for each ZOI). Since we are exporting reclassified rasters, let's use **CreateIndividualFolders2()**:
@@ -266,7 +266,7 @@ CreateIndividualFolders2(ExportPath_RGBSum_Individual_YearX, ID_list, RGBSum_Thr
 ### **35** - Cut and Export Individual ZOI Binary RGBSum and store those in a matrix in memory
 Once more, cut and export the monthly Binary RGBSum for each ZOI and store them in a matrix where Matrix[[1]] is a list of monthly Binary RGBSum for ZOI 1 and Matrix[[1]][[1]] is the the first month of the agricultural Year X for ZOI 1 (assuming entry data is 12 months and sorted by Agricultural Year) using as arguments: **RGBSum_YearX_ZOI_Binary** from step 28, **ZOI_Shapefile_List** from step 15, **ExportPath_RGBSum_Binary_Individual_** from step 11, **ID_list** (global variable that should be created from running step 12), a string name for the files (XXX_, as the function will attach ZOI ID and month to the end), a string to print as each composite is exported, a string to print as each ZOI is finished and a string to print in the end;
 ```{r, eval=FALSE}
-Binary_RGBSum_YearX_IndividualZOI_ListOfLists = IndividualProduct(RGBSum_YearX_ZOI_Binary, ZOI_Shapefile_List, ExportPath_RGBSum_Binary_Individual_, ID_list, "RGBSum_Binary_YearX_ZOI_", "Singular Binary RGBSum Exported ", "Completed Binary RGBSum ", "Completed All Binary RGBSum")
+Binary_RGBSum_YearX_IndividualZOI_ListOfLists = IndividualZOIProduct(RGBSum_YearX_ZOI_Binary, ZOI_Shapefile_List, ExportPath_RGBSum_Binary_Individual_YearX, ID_list, "RGBSum_Binary_YearX_ZOI_", "Singular Binary RGBSum Exported ", "Completed Binary RGBSum ", "Completed All Binary RGBSum")
 ```
 ## Processing Algorithm with Binary NDVI and Binary RGBSum
 ### **36** - Calculate Algorithm 
@@ -282,7 +282,7 @@ Algorithm_YearX_ZOI_Binary = ReclassRasterList(Algorithm_YearX_ZOI, VectorAlgori
 ### **38** - Export reclassified Algorithm
 Using **ExportRasterList()**, we can export our result (for all ZOI together):
 ```{r, eval=FALSE}
-ExportRasterList(Algorithm_YearX_ZOI_Binary, ExportPath_Algorithm_All_, "Algorithm_Binary_All_YearX_", "Finished Exporting Binary Algorithm ", "Finished Exporting all Binary Algorithm")
+ExportRasterList(Algorithm_YearX_ZOI_Binary, ExportPath_Algorithm_All_YearX, "Algorithm_Binary_All_YearX_", "Finished Exporting Binary Algorithm ", "Finished Exporting all Binary Algorithm")
 ```
 ### **39** - Create Individual Folders for Algorithm
 Use **CreateIndividualFolders3()**, as we can name the folders according to the thresholds used.
@@ -292,7 +292,7 @@ CreateIndividualFolders3(ExportPath_RGBSum_Individual_YearX, ID_list, NDVI_Thres
 ### **40** - Cut and Export Individual ZOI Binary Algorithm and store those in a matrix in memory
 One final time, cut and export the monthly Binary Algorithm for each ZOI and store them in a matrix where Matrix[[1]] is a list of monthly Binary Algorithm for ZOI 1 and Matrix[[1]][[1]] is the the first month of the agricultural Year X for ZOI 1 (assuming entry data is 12 months and sorted by Agricultural Year) using as arguments: **Algorithm_YearX_ZOI_Binary** from step 28, **ZOI_Shapefile_List** from step 15, **ExportPath_Algorithm_Individual_** from step 11, **ID_list** (global variable that should be created from running step 12), a string name for the files (XXX_, as the function will attach ZOI ID and month to the end), a string to print as each composite is exported, a string to print as each ZOI is finished and a string to print in the end;
 ```{r, eval=FALSE}
-Binary_Algorithm_YearX_IndividualZOI_ListOfLists = IndividualProduct(Algorithm_YearX_ZOI_Binary, ZOI_Shapefile_List, ExportPath_Algorithm_Individual_, ID_list, "Algorithm_Binary_YearX_ZOI_", "Singular Binary Algorithm Exported ", "Completed Binary Algorithm ", "Completed All Binary Algorithm")
+Binary_Algorithm_YearX_IndividualZOI_ListOfLists = IndividualZOIProduct(Algorithm_YearX_ZOI_Binary, ZOI_Shapefile_List, ExportPath_Algorithm_Individual_YearX, ID_list, "Algorithm_Binary_YearX_ZOI_", "Singular Binary Algorithm Exported ", "Completed Binary Algorithm ", "Completed All Binary Algorithm")
 ```
 ## Building Dataframes for Time Series Graphs (and exporting .csv)
 ### **41** - Organize your Data into lists;

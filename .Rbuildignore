@@ -1,3 +1,7 @@
 ^WaterDetection\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^WaterDetection\docs
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
