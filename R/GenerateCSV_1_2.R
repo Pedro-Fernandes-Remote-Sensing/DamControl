@@ -17,7 +17,7 @@ GenerateCSV = function(ZOI_List_of_Lists, ExportPath, Year, ID_list, ProductName
   Iterator =  1
   ZOI_DataframeList = list()
   for (ZOI in ZOI_List_of_Lists) {
-    ZOIDataframe = data.frame(Year = integer(), Month = character(), WaterPixels = integer(), NotWaterPixels = integer(), TotalPixel = integer(), TotalWaterAreaM2 = integer(), TotalAreaM2 = integer(), WaterPercentage = integer())
+    ZOIDataframe = data.frame(Year = integer(), Month = character(), WaterPixels = integer(), NotWaterPixels = integer(), TotalPixel = integer(), TotalWaterAreaM2 = integer(), TotalAreaM2 = integer(), WaterPercentage = integer(), stringsAsFactors = FALSE)
     MonthNamesIterator = 1
     for (BinaryNDVI in ZOI) {
       WaterCells = raster::cellStats(BinaryNDVI == 1, sum)
@@ -65,7 +65,7 @@ GenerateCSV2 = function(ZOI_List_of_Lists, ExportPath, Year, ID_list, ProductNam
   Iterator =  1
   ZOI_DataframeList = list()
   for (ZOI in ZOI_List_of_Lists) {
-    ZOIDataframe = data.frame(Year = integer(), Month = character(), WaterPixels = integer(), NotWaterPixels = integer(), TotalPixel = integer(), TotalWaterAreaM2 = integer(), TotalAreaM2 = integer(), WaterPercentage = integer())
+    ZOIDataframe = data.frame(Year = integer(), Month = character(), WaterPixels = integer(), NotWaterPixels = integer(), TotalPixel = integer(), TotalWaterAreaM2 = integer(), TotalAreaM2 = integer(), WaterPercentage = integer(), stringsAsFactors = FALSE)
     MonthNamesIterator = 1
     for (BinaryNDVI in ZOI) {
       WaterCells = raster::cellStats(BinaryNDVI == 1, sum)

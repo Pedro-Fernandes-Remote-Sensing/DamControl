@@ -6,8 +6,7 @@
 #' @param ShapeName a string representing the shapefiles name;
 #'
 #' @return a list of rasters cut to the zone of the shapefile presented in the arguments;
-#' @importFrom sf read_sf
-#' @importFrom sf st_zm
+#' @importFrom rgdal readOGR
 #' @importFrom raster crop
 #' @importFrom raster mask
 #' @importFrom raster extent
@@ -15,12 +14,11 @@
 CropAndMask = function(BrickList, ShapefilePath, ShapeName){
   StartTime = Sys.time()
   CroppedMaskedList = list()
-  Shapefile = sf::read_sf(ShapefilePath, ShapeName)
-  ShapefileXY = sf::st_zm(Shapefile)
+  Shapefile = rgdal::readOGR(dsn = paste0(ShapefilePath, ShapeName))
   Iterator = 1
   for (File in BrickList){
-    Cropped = raster::crop(File, raster::extent(ShapefileXY))
-    Masked = raster::mask(Cropped, ShapefileXY)
+    Cropped = raster::crop(File, raster::extent(Shapefile))
+    Masked = raster::mask(Cropped, Shapefile)
     print(noquote(paste0("Cropped and Masked Brick ", Iterator)))
     CroppedMaskedList[[Iterator]] = Masked
     Iterator = Iterator + 1
